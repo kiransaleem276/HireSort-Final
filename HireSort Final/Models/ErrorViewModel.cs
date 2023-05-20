@@ -1,4 +1,4 @@
-namespace HireSort_Final.Models
+namespace HireSort.Models
 {
     public class ErrorViewModel
     {

@@ -1,21 +1,24 @@
-﻿using HireSort_Final.Models;
+﻿using HireSort.Models;
+using HireSort.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 
-namespace HireSort_Final.Controllers
+namespace HireSort.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IDashboard _dashboard;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IDashboard dashboard)
         {
             _logger = logger;
+            _dashboard = dashboard;
         }
 
         public IActionResult Index()
         {
-            //fkkkskisieiei
             return View();
         }
 
@@ -27,7 +30,8 @@ namespace HireSort_Final.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
