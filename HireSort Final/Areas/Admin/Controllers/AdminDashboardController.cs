@@ -16,7 +16,7 @@ namespace HireSort_Final.Areas.Admin.Controllers
             _dashboard = dashboard;
         }
 
-        public IActionResult Index()
+        public IActionResult AdminDashboard()
         {
             return View();
         }

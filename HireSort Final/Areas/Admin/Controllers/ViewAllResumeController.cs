@@ -53,7 +53,6 @@ using System.Diagnostics;
 
 namespace HireSort.Areas.Admin.Controllers
 {
-
     public class ViewAllResumeController : Controller
     {
         private readonly ILogger<ViewAllResumeController> _logger;

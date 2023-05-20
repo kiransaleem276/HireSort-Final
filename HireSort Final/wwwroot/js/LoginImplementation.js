@@ -26,7 +26,7 @@ function _displayHome(data) {
     var status = data.status
   
     if (status == 200) {
-        document.getElementById('btn_Login').href = "Admin"
+        document.getElementById('btn_Login').href = "Admin/AdminDashboard/AdminDashboard"
     }
 
     else {

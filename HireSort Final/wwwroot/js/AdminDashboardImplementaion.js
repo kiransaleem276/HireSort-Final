@@ -19,12 +19,12 @@ const ddl_Vac = $('#vacancy');
 
 $(document).ready(function () {
 
-  
-        getItemsDept();
-        getItemsVacancyList();
+
+    getItemsDept();
+    getItemsVacancyList();
     getItemsVacancyCount();
 
-   
+
 });
 
 // Get Department Dropdown
@@ -64,7 +64,7 @@ function _displayItemsDept(data) {
 }
 
 $("#department").change(function () {
-  
+
     getItemsVacancy();
     ddl_Vac.empty();
 
@@ -112,9 +112,9 @@ function getItemsVacancy() {
 
 function _displayItemsVacancy(data) {
 
-   
+
     const ddl_Vac = document.getElementById('vacancy');
-   
+
 
     if (data.statusCode == 200) {
         var parsedata = data.successData;
@@ -210,7 +210,7 @@ function _displayItemsVacancyCount(data) {
             var deptIDVacancyList = item.depatId;
             let btnVacancyCount = document.createElement('a');
             btnVacancyCount.href = `Admin/ViewDeptVacancy/ViewDeptVacancy?departId=${deptIDVacancyList}`
-            
+
 
             let lblVacancyCount = document.createElement('p');
             lblVacancyCount.classList.add('mb-0');
@@ -283,12 +283,12 @@ function _displayItemsVacancyList(data) {
             //View Shortlisted Button
             let btnViewShortlisted = document.createElement('a');
             let textViewShortlisted = document.createTextNode("View Shortlisted Resume");
-            btnViewShortlisted.href = `Admin/ShortlistResume/ShortlistResume?departId=${deptId}&vacancyId=${vacancyId}`
+            btnViewShortlisted.href = `/Admin/ShortlistResume/ShortlistResume?departId=${deptId}&vacancyId=${vacancyId}`
             btnViewShortlisted.className = "viewResume";
             btnViewShortlisted.appendChild(textViewShortlisted);
 
             td5.appendChild(btnViewShortlisted);
-
+            s
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -297,9 +297,9 @@ function _displayItemsVacancyList(data) {
             tbl_vacancyList.appendChild(tr);
 
 
-       
 
-             
+
+
         });
 
     }
@@ -307,7 +307,7 @@ function _displayItemsVacancyList(data) {
     else if (data.errordata !== null) {
         let infoEmptyTable = document.createElement('h7');
         infoEmptyTable.classList.add('mb-3');
-        infoEmptyTable.textContent = "No data available in table"; 
+        infoEmptyTable.textContent = "No data available in table";
     }
 
 
