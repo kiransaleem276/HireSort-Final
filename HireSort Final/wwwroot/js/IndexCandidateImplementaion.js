@@ -21,11 +21,11 @@ $(document).ready(function () {
   
     if (window.location.search == "Admin") {
         document.getElementById("btnAddNew").style.display = "inline-block";
-        document.getElementById("btnHome").style.display = "inline-block";
+        //document.getElementById("btnHome").style.display = "inline-block";
     }
     else {
         document.getElementById("btnAddNew").style.display = "none";
-        document.getElementById("btnHome").style.display = "none";
+        //document.getElementById("btnHome").style.display = "none";
     }
         getItemsDept();
        getItemsVacancyList();
@@ -286,14 +286,14 @@ function _displayItemsVacancyList(data) {
             btnViewJob.appendChild(textViewJob);
 
             td4.appendChild(btnViewJob);
-
+            td4.style.textAlign = 'center';
            
 
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
             tr.appendChild(td4);
-            tr.appendChild(td5);
+            //tr.appendChild(td5);
             tbl_vacancyList.appendChild(tr);
 
 

@@ -29,6 +29,7 @@ $(document).ready(function () {
 
 // Get Department Dropdown
 function getItemsDept() {
+    debugger;
     fetch(uriDept)
         .then(response => response.json())
         .then(data => _displayItemsDept(data))

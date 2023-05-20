@@ -275,7 +275,7 @@ namespace HireSort.Repository.Implementation
             try
             {
                 var login = await _dbContext.Logins.Where(w => w.Email == email).FirstOrDefaultAsync();
-                if (login != null)
+                if (login == null)
                 {
                     return CommonHelper.GetApiSuccessResponse("Email Not Found", 400);
                 }

@@ -19,11 +19,11 @@ $(document).ready(function () {
 
     if (window.location.search == "Admin") {
         document.getElementById("btnAddNew").style.display = "inline-block";
-        document.getElementById("btnHome").style.display = "inline-block";
+        //document.getElementById("btnHome").style.display = "inline-block";
     }
     else {
         document.getElementById("btnAddNew").style.display = "none";
-        document.getElementById("btnHome").style.display = "none";
+        //document.getElementById("btnHome").style.display = "none";
     }
 
     getJobDetails();
@@ -39,10 +39,14 @@ function applyNow(fname, lname, email, files, coverLetter) {
     var emailAdd = document.getElementById(email).value;
     var cover = document.getElementById(coverLetter).value;
     var fileName = document.getElementById(files);
-    var files = fileName.files;
+    var file = fileName.files;
 
+    if (firstname == "" || lastname == "" || emailAdd == "" || file.length == 0) {
+        alert("Please fill the form correctly.");
+        return;
+    }
     var formData = new FormData();
-    formData.append("file", files[0]);
+    formData.append("file", file[0]);
 
     $.ajax(
         {
@@ -53,7 +57,7 @@ function applyNow(fname, lname, email, files, coverLetter) {
             contentType: false,
             type: "POST",
             success: function (data) {
-               //location.reload();
+                //location.reload();
                 //getResumeList();
                 alert("Files Uploaded!");
             },
@@ -94,7 +98,9 @@ function _displayJobDetails(data) {
             //Job Desc
             let jobDescription = document.createElement('h3');
             jobDescription.classList.add('mb-3');
+            jobDescription.classList.add('headingColor');
             jobDescription.textContent = item.jobName;
+            //jobDescription.style.color = '#5384C9 !important';
             jobdetailist.appendChild(jobDescription);
 
             //Start Date
