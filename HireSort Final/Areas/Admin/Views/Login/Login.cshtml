@@ -17,14 +17,14 @@
                         <div class="row g-3 my-4">
                             <div class="col-12">
                                 <label class="form-label">Username</label>
-                                <input class="form-control bg-white" placeholder="Enter Username">
+                                <input class="form-control bg-white" placeholder="Enter Username" id="tb_username">
                             </div>
                             <div class="col-12">
                                 <label class="form-label">Password</label>
-                                <input class="form-control bg-white" placeholder="Enter Password" type="password">
+                                <input class="form-control bg-white" placeholder="Enter Password" type="password" id="tb_password">
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 mt-5" type="submit">Log In</button>
+                                <a href="javascript:void(0);" class="btn btn-primary w-100 mt-5 py-2" onclick="getLogin();" id="btn_Login">Log In</a>
                             </div>
                         </div>
                     </form>
@@ -36,9 +36,15 @@
 
 <!-- Add New End -->
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
+
+<script src="~/js/LoginImplementation.js"></script>
+
+
 <style>
     .container-xxl {
-        max-width: 600px !important;
+        max-width: 550px !important;
     }
 
         .container-xxl.loginCard {
