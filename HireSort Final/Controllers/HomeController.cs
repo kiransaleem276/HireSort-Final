@@ -15,6 +15,7 @@ namespace HireSort_Final.Controllers
 
         public IActionResult Index()
         {
+            //fkkkskisieiei
             return View();
         }
 
