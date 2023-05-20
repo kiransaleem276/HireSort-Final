@@ -173,8 +173,8 @@ namespace HireSort.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(string email,string password)
         {
-            var result = _dashboard.Login(email, password);
-            if (result.Result.StatusCode == 400)
+            var result =await _dashboard.Login(email, password);
+            if (result.StatusCode == 400)
             {
                 return BadRequest(result);
             }
