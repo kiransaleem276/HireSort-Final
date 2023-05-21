@@ -5,15 +5,15 @@ namespace HireSort.Repository.Interface
 {
     public interface IDashboard
     {
-        Task<ApiResponseMessage> GetDepartment();
-        Task<ApiResponseMessage> GetVacanciesDepartmentWise(int departId);
-        Task<ApiResponseMessage> GetDepartAndVacacyDetails(int departId = 0, int vacancyId = 0);
-        Task<ApiResponseMessage> GetAllResumes(int departId, int vacancyId, bool isShortListedResume = false);
-        Task<ApiResponseMessage> GetDepartmentVacancyCount();
-        Task<ApiResponseMessage> GetDepartmentJobs(int departId);
-        Task<ApiResponseMessage> GetJobDetail(int departId, int jobId);
-        Task<ApiResponseMessage> GetResumeCompatibiltiy(int resumeId, int jobId);
-        Task<ApiResponseMessage> ResumeShorlisting(int resumeId);
+        Task<ApiResponseMessage> GetDepartment(int? clientID);
+        Task<ApiResponseMessage> GetVacanciesDepartmentWise(int departId, int? clientId);
+        Task<ApiResponseMessage> GetDepartAndVacacyDetails(int? clientId, int departId = 0, int vacancyId = 0);
+        Task<ApiResponseMessage> GetAllResumes(int departId, int vacancyId, int? clientId, bool isShortListedResume = false);
+        Task<ApiResponseMessage> GetDepartmentVacancyCount(int? clientId);
+        Task<ApiResponseMessage> GetDepartmentJobs(int departId, int? clientId);
+        Task<ApiResponseMessage> GetJobDetail(int departId, int jobId, int? clientId);
+        Task<ApiResponseMessage> GetResumeCompatibiltiy(int resumeId, int jobId, int? clientId);
+        Task<ApiResponseMessage> ResumeShorlisting(int resumeId, int? clientId);
         Task<ApiResponseMessage> Login(string email, string password);
     }
 }

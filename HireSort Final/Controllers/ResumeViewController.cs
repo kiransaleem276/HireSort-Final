@@ -22,7 +22,7 @@ namespace HireSort.Controllers
 		{
 			if (file.Length > 0)
 			{
-				var result = _resumeParsing.ResumeUpload(file, jobId);
+				var result = _resumeParsing.ResumeUpload(file, jobId, HttpContext?.Session?.GetInt32("_ClientID"));
 			}
 			return Task.CompletedTask;
 		}

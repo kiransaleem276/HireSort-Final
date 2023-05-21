@@ -5,9 +5,9 @@
 //script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
 //document.getElementsByTagName('head')[0].appendChild(script);
 
-const uriDept = 'api/Dashboard/departments';
-const uriVacancyList = 'api/Dashboard/department-and-vacancies-details';
-const uriVacancyCount = 'api/Dashboard/depart-vacancy-count';
+const uriDept = 'api/Dashboard/departments?candidate=true';
+const uriVacancyList = 'api/Dashboard/department-and-vacancies-details?candidate=true';
+const uriVacancyCount = 'api/Dashboard/depart-vacancy-count?candidate=true';
 
 const ddl_Dept = document.getElementById('department');
 
@@ -93,7 +93,7 @@ $("#btn_Search").click(function myfunction() {
     //    },
     //    body: JSON.stringify(item)
     //})
-    var filteredVacList = `api/Dashboard/department-and-vacancies-details?departId=${dpt_id}&vacancyId=${vac_Id}`
+    var filteredVacList = `api/Dashboard/department-and-vacancies-details?departId=${dpt_id}&vacancyId=${vac_Id}&candidate=true`
 
     fetch(filteredVacList)
         .then(response => response.json())
@@ -110,7 +110,7 @@ function getItemsVacancy() {
     if (deptid == "")
         deptid = '1';
 
-    const uriVacancy = `api/Dashboard/vacancies-department-wise?departId=${deptid}`;
+    const uriVacancy = `api/Dashboard/vacancies-department-wise?departId=${deptid}&candidate=true`;
     fetch(uriVacancy)
         .then(response => response.json())
         .then(data => _displayItemsVacancy(data))
@@ -216,7 +216,7 @@ function _displayItemsVacancyCount(data) {
 
             var deptIDVacancyList = item.depatId;
             let btnVacancyCount = document.createElement('a');
-            btnVacancyCount.href = `ViewDeptVacancy/ViewDeptVacancy?departId=${deptIDVacancyList}`
+            btnVacancyCount.href = `ViewDeptVacancy/ViewDeptVacancy?departId=${deptIDVacancyList}&candidate=true`
             
 
             let lblVacancyCount = document.createElement('p');
@@ -281,7 +281,7 @@ function _displayItemsVacancyList(data) {
 
             let btnViewJob= document.createElement('a');
             let textViewJob = document.createTextNode("View Job Detail");
-            btnViewJob.href = `ViewJobDetailCandidate/ViewJobDetailCandidate?departId=${deptId}&vacancyId=${vacancyId}`
+            btnViewJob.href = `ViewJobDetailCandidate/ViewJobDetailCandidate?departId=${deptId}&vacancyId=${vacancyId}&candidate=true`
             btnViewJob.className = "viewResume";
             btnViewJob.appendChild(textViewJob);
 

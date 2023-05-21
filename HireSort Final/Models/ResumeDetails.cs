@@ -2,7 +2,7 @@
 {
     public class ResumeDetails
     {
-        public int clientId { get; set; }
+        public int? clientId { get; set; }
         public int DepartId { get; set; }
         public int VacancyId { get; set; }
 

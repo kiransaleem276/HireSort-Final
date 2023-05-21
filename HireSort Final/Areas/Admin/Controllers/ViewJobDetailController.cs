@@ -15,6 +15,10 @@ namespace HireSort.Areas.Admin.Controllers
 
         public IActionResult ViewJobDetail()
         {
+            if (HttpContext.Session.GetInt32("_ClientID") != 1)
+            {
+                Response.Redirect("/Admin");
+            }
             return View();
         }
 

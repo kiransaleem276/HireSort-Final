@@ -15,14 +15,14 @@ namespace HireSort.Repository.Implementation
     public class ResumeParsing : IResumeParsing
     {
         private readonly HRContext _dbContext;
-        private int clientId = 1;
+        //private int clientId = 1;
 
         public ResumeParsing(HRContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<ApiResponseMessage> ResumeUpload(IFormFile file, int jobId, string firstName = null, string lastName = null, string email = null, string coverLetter = null)
+        public async Task<ApiResponseMessage> ResumeUpload(IFormFile file, int jobId,int? clientId, string firstName = null, string lastName = null, string email = null, string coverLetter = null)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace HireSort.Repository.Implementation
                 //return ex.Message.ToString();
             }
         }
-        public async Task<ApiResponseMessage> resumeCheckCompatibility(int resumeId, int jobId)
+        public async Task<ApiResponseMessage> resumeCheckCompatibility(int resumeId, int jobId, int? clientId)
         {
 
             var resume = _dbContext.Resumes.Where(w => w.ClientId == clientId && w.JobId == jobId && w.Id == resumeId && w.IsFileParsed != true).FirstOrDefault();
@@ -245,7 +245,7 @@ namespace HireSort.Repository.Implementation
 
         }
 
-        public async Task<ApiResponseMessage> ResumeCalculateCompatibility(int resumeId, int jobId)
+        public async Task<ApiResponseMessage> ResumeCalculateCompatibility(int resumeId, int jobId, int? clientId)
         {
             string res = String.Empty;
             var resume = _dbContext.Resumes.Where(w => w.ClientId == clientId && w.JobId == jobId && w.Id == resumeId && w.IsFileParsed != true).FirstOrDefault();

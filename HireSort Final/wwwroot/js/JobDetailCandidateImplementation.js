@@ -15,6 +15,7 @@ $(document).ready(function () {
     const params = new URLSearchParams(window.location.search);
     deptID = params.get('departId');
     vacID = params.get('vacancyId');
+    candidate = params.get('candidate');
 
 
     if (window.location.search == "Admin") {
@@ -51,7 +52,7 @@ function applyNow(fname, lname, email, files, coverLetter) {
     $.ajax(
         {
             //url: "/api/dashboard/uplojjjjjjjadfile?jobId=1",
-            url: `/api/dashboard/apply-now?jobId=${vacID}&firstName=${firstname}&lastName=${lastname}&email=${emailAdd}&coverletter="${cover}"`,
+            url: `/api/dashboard/apply-now?jobId=${vacID}&firstName=${firstname}&lastName=${lastname}&email=${emailAdd}&coverletter="${cover}"&candidate=${candidate}`,
             data: formData,
             processData: false,
             contentType: false,
@@ -76,7 +77,7 @@ function applyNow(fname, lname, email, files, coverLetter) {
 
 function getJobDetails() {
 
-    const uriResumeList = `/api/dashboard/job-detail?departId=${deptID}&jobId=${vacID}`
+    const uriResumeList = `/api/dashboard/job-detail?departId=${deptID}&jobId=${vacID}&candidate=${candidate}`
     fetch(uriResumeList)
         .then(response => response.json())
         .then(data => _displayJobDetails(data))

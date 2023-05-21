@@ -10,7 +10,7 @@ namespace HireSort.Repository.Implementation
 {
     public class Dashboard : IDashboard
     {
-        private int clientId = 1;
+        //private int clientId = 1;
         private readonly HRContext _dbContext;
         private readonly string _dateTimeFormat, _dateFormat;
 
@@ -20,7 +20,7 @@ namespace HireSort.Repository.Implementation
             _dateTimeFormat = configuration["AppSettings:DateTimeFormat"];
             _dateFormat = configuration["AppSettings:DateFormat"];
         }
-        public async Task<ApiResponseMessage> GetDepartment()
+        public async Task<ApiResponseMessage> GetDepartment(int? clientId)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace HireSort.Repository.Implementation
                 return CommonHelper.GetApiSuccessResponse(exceptionString, 400);
             }
         }
-        public async Task<ApiResponseMessage> GetVacanciesDepartmentWise(int departId)
+        public async Task<ApiResponseMessage> GetVacanciesDepartmentWise(int departId, int? clientId)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> GetDepartAndVacacyDetails(int departId = 0, int vacancyId = 0)
+        public async Task<ApiResponseMessage> GetDepartAndVacacyDetails(int? clientId, int departId = 0, int vacancyId = 0)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> GetAllResumes(int departId, int vacancyId, bool isShortListedResume = false)
+        public async Task<ApiResponseMessage> GetAllResumes(int departId, int vacancyId, int? clientId, bool isShortListedResume = false)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> GetDepartmentVacancyCount()
+        public async Task<ApiResponseMessage> GetDepartmentVacancyCount(int? clientId)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> GetDepartmentJobs(int departId)
+        public async Task<ApiResponseMessage> GetDepartmentJobs(int departId, int? clientId)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> GetJobDetail(int departId, int jobId)
+        public async Task<ApiResponseMessage> GetJobDetail(int departId, int jobId, int? clientId)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> GetResumeCompatibiltiy(int resumeId, int jobId)
+        public async Task<ApiResponseMessage> GetResumeCompatibiltiy(int resumeId, int jobId, int? clientId)
         {
             try
             {
@@ -248,7 +248,7 @@ namespace HireSort.Repository.Implementation
             }
         }
 
-        public async Task<ApiResponseMessage> ResumeShorlisting(int resumeId)
+        public async Task<ApiResponseMessage> ResumeShorlisting(int resumeId, int? clientId)
         {
             try
             {
