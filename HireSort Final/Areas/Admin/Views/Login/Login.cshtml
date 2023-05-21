@@ -15,8 +15,12 @@
                     </div>
                     <form>
                         <div class="row g-3 my-4">
+                            <div class="col-12 border border-1 border-danger p-2 rounded" id="div_error" style="display:none">
+                                <label class="form-label text-danger mb-0" id="lbl_error"></label>
+                                
+                            </div>
                             <div class="col-12">
-                                <label class="form-label">Username Test</label>
+                                <label class="form-label">Username</label>
                                 <input class="form-control bg-white" placeholder="Enter Username" id="tb_username">
                             </div>
                             <div class="col-12">
@@ -24,7 +28,7 @@
                                 <input class="form-control bg-white" placeholder="Enter Password" type="password" id="tb_password">
                             </div>
                             <div class="col-12">
-                                <a href="javascript:void(0);" class="btn btn-primary w-100 mt-5 py-2" onclick="getLogin();" id="btn_Login">Log In</a>
+                                <a  class="btn btn-primary w-100 mt-5 py-2" onclick="getLogin();"  id="btn_Login">Log In</a>
                             </div>
                         </div>
                     </form>

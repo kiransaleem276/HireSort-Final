@@ -16,22 +16,32 @@ function getLogin() {
    
     const uriHome = `api/dashboard/login?email=${username}&password=${password}`;
     fetch(uriHome)
- //  .then(response => response.json())
+   .then(response => response.json())
    .then(data => _displayHome(data))
     .catch(error => console.error('Unable to get items.', error));
 }
 
 function _displayHome(data) {
 
-    var status = data.status
+    var status = data.statusCode
   
     if (status == 200) {
-        document.getElementById('btn_Login').href = "Admin/AdminDashboard/AdminDashboard"
+        document.getElementById('div_error').style.display = "none";
+        // document.getElementById('btn_Login').href = "Admin/AdminDashboard/AdminDashboard"
+        window.location.href = "Admin/AdminDashboard/AdminDashboard"
     }
 
     else {
-        alert("Login failure");
+        document.getElementById('div_error').style.display = "block";
+        document.getElementById('lbl_error').innerHTML = data.successData;
     }
 
 }
 
+document.getElementById("tb_username")
+    .addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById("btn_Login").click();
+        }
+    });

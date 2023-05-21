@@ -36,6 +36,7 @@ function _displayVacancyList(data) {
     if (status == 200) {
         parsedata.forEach(item => {
 
+            var vacancyId = item.jobId;
 
             let divCardMain = document.createElement('div');
             divCardMain.classList.add('job-item', 'p-4', 'mb-4');
@@ -80,7 +81,7 @@ function _displayVacancyList(data) {
             let btnViewDetails = document.createElement('a');
             btnViewDetails.classList.add('btn', 'btn-primary', 'me-3');
             let textViewDetails = document.createTextNode("View");
-            btnViewDetails.href = '/Admin/ViewJobDetail/ViewJobDetail'
+            btnViewDetails.href = `/Admin/ViewJobDetail/ViewJobDetail?departId=${deptID}&vacancyId=${vacancyId}&candidate=false`
             btnViewDetails.appendChild(textViewDetails);
 
 

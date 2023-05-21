@@ -13,25 +13,21 @@
                 <div class="">
                     <div class="row g-3 my-4">
                         <div class="col-8"><h4 class="mb-4">Add New Job Vacancy</h4></div>
-                        <div class="col-4 text-end">  <a asp-area="" asp-controller="" asp-action="" class="btn btn-primary w-50">Back</a></div>
+                        <div class="col-4 text-end">  <a href="javascript:history.go(-1)" class="btn btn-primary w-50">Back</a></div>
                     </div>
                     <hr />
                     <form>
                         <div class="row g-3 my-4">
                             <div class="col-12 col-sm-6">
-                                <select type="text" class="form-select">
-                                    <option selected>Department</option>
-                                    <option>Development (IT)</option>
-                                    <option>Human Resource</option>
-                                    <option>Finance</option>
+                                <select type="text" class="form-select" id="department" name="department">
+                                    <option value="0">Select Department</option>
+
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <select type="text" class="form-select">
-                                    <option selected>Vacancy</option>
-                                    <option>Web Developer</option>
-                                    <option>Associate HR</option>
-                                    <option>Finance Manager</option>
+                                <select type="text" class="form-select" id="vacancy" name="vacancy">
+                                    <option value="0">Select Job Title</option>
+                                   
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
@@ -83,3 +79,8 @@
     </div>
 </div>
 <!-- Add New End -->
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
+
+<script src="~/js/AddNewJobImplementation.js"></script>
