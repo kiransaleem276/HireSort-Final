@@ -1,4 +1,6 @@
-﻿using HireSort.Models;
+﻿using HireSort.Entity.DbModels;
+using HireSort.Models;
+using HireSort_Final.Models;
 using System.Data;
 
 namespace HireSort.Repository.Interface
@@ -15,5 +17,6 @@ namespace HireSort.Repository.Interface
         Task<ApiResponseMessage> GetResumeCompatibiltiy(int resumeId, int jobId, int? clientId);
         Task<ApiResponseMessage> ResumeShorlisting(int resumeId, int? clientId);
         Task<ApiResponseMessage> Login(string email, string password);
+        Task<ApiResponseMessage> AddJob(AddJobDetail jobDetail);
     }
 }

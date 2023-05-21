@@ -1,7 +1,9 @@
 ﻿using HireSort.Context;
+using HireSort.Entity.DbModels;
 using HireSort.Helpers;
 using HireSort.Models;
 using HireSort.Repository.Interface;
+using HireSort_Final.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Net;
@@ -24,7 +26,7 @@ namespace HireSort.Repository.Implementation
         {
             try
             {
-                var departmentList = await _dbContext.Departments.Where(w => w.ClientId == clientId && w.IsActive == true).Select(s => new Department()
+                var departmentList = await _dbContext.Departments.Where(w => w.ClientId == clientId && w.IsActive == true).Select(s => new Models.Department()
                 {
                     DepartmentId = s.DepartmentId,
                     DepartmentName = s.DepartmentName,
@@ -293,6 +295,145 @@ namespace HireSort.Repository.Implementation
                 }
                 return CommonHelper.GetApiSuccessResponse("Login Unsuccessfully", 400);
 
+            }
+            catch (Exception ex)
+            {
+                string exceptionString = ex.Message + ex.StackTrace + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                return CommonHelper.GetApiSuccessResponse(exceptionString, 400);
+            }
+        }
+        public async Task<ApiResponseMessage> AddJob(AddJobDetail jobDetails)
+        {
+            try
+            {
+                Job job = new Job();
+                job.JobName = jobDetails.JobTitle ?? "";
+                job.ClientId = jobDetails.ClientId ?? 0;
+                job.DepartmentId = jobDetails.DepartId;
+                job.StartDate = jobDetails.StartDate??DateTime.Now;
+                job.EndDate = jobDetails.EndDate;
+                job.IsActive = true;
+                job.CreatedBy = jobDetails.ClientId.ToString();
+                job.CreatedOn = DateTime.Now;
+
+                _dbContext.Jobs.Add(job);
+                await _dbContext.SaveChangesAsync();
+
+                if (jobDetails.JobShift != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 7;
+                    jobDetail.Description = jobDetails.JobShift;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.AdditionalDesc != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 8;
+                    jobDetail.Description = jobDetails.AdditionalDesc;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Salary != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 6;
+                    jobDetail.Description = jobDetails.Salary;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.JobType != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 5;
+                    jobDetail.Description = jobDetails.JobType;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Skills != null && jobDetails.Skills.Count > 0)
+                {
+                    List<JobDetail> jobDetail = new List<JobDetail>();
+                    foreach (var skil in jobDetails.Skills)
+                    {
+                        jobDetail.Add(new JobDetail()
+                        {
+                            JobId = job.JobId,
+                            JobCodeId = 3,
+                            Description = skil,
+                            ClientId = jobDetails.ClientId ?? 0,
+                            CreatedBy = jobDetails.ClientId.ToString(),
+                            CreatedOn = DateTime.Now,
+                        });
+                    }
+                    _dbContext.JobDetails.AddRange(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Educations != null && jobDetails.Educations.Count > 0)
+                {
+                    List<JobDetail> jobDetail = new List<JobDetail>();
+                    foreach (var edu in jobDetails.Educations)
+                    {
+                        jobDetail.Add(new JobDetail()
+                        {
+                            JobId = job.JobId,
+                            JobCodeId = 4,
+                            Description = edu,
+                            ClientId = jobDetails.ClientId ?? 0,
+                            CreatedBy = jobDetails.ClientId.ToString(),
+                            CreatedOn = DateTime.Now,
+                        });
+                    }
+                    _dbContext.JobDetails.AddRange(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Experiences != null && jobDetails.Experiences.Count > 0)
+                {
+                    List<JobDetail> jobDetail = new List<JobDetail>();
+                    foreach (var exp in jobDetails.Experiences)
+                    {
+                        jobDetail.Add(new JobDetail()
+                        {
+                            JobId = job.JobId,
+                            JobCodeId = 2,
+                            Description = exp,
+                            ClientId = jobDetails.ClientId ?? 0,
+                            CreatedBy = jobDetails.ClientId.ToString(),
+                            CreatedOn = DateTime.Now,
+                        });
+                    }
+                    _dbContext.JobDetails.AddRange(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Responsibility != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 1;
+                    jobDetail.Description = jobDetails.Responsibility;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                return CommonHelper.GetApiSuccessResponse("Success",200);
             }
             catch (Exception ex)
             {

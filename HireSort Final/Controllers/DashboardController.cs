@@ -1,6 +1,8 @@
 ﻿using HireSort.Areas.Admin.Controllers;
+using HireSort.Entity.DbModels;
 using HireSort.Models;
 using HireSort.Repository.Interface;
+using HireSort_Final.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -204,6 +206,19 @@ namespace HireSort.Controllers
                 return Ok(result);
             }
             return BadRequest();
+        }
+
+       
+        [HttpPost]
+        [Route("add-job")]
+        public async Task<IActionResult> AddJob(AddJobDetail jobDetail)
+        {
+            var result = await _dashboard.AddJob(jobDetail);
+            if (result.StatusCode == 400)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }
