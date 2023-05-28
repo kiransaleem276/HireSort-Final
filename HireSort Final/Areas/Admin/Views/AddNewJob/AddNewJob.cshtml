@@ -27,7 +27,7 @@
                             <div class="col-12 col-sm-6">
                                 <select type="text" class="form-select" id="vacancy" name="vacancy">
                                     <option value="0">Select Job Title</option>
-                                   
+
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
@@ -39,25 +39,9 @@
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Qualification">
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Experience">
-                            </div>
-                            <div class="col-12 col-sm-6">
                                 <input class="form-control bg-white" placeholder="Salary">
                             </div>
-                            <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Responsibilities">
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <select type="text" class="form-select">
-                                    <option selected>Job Shift</option>
-                                    <option>Day</option>
-                                    <option>Afternoon</option>
-                                    <option>Night</option>
-                                </select>
-                            </div>
+
                             <div class="col-12 col-sm-6">
                                 <input class="form-control bg-white" placeholder="Start Date" type="date">
                             </div>
@@ -65,14 +49,58 @@
                                 <input class="form-control bg-white" placeholder="End Date" type="date">
                             </div>
 
-                            <div class="col-12">
-                                <textarea class="form-control" rows="5" placeholder="Additonal Description"></textarea>
+                            <div class="col-12 col-sm-6">
+                                <div class="input-group mb-4">
+                                    <input type="text" id="tb_qual" class="form-control bg-white" placeholder="Qualification" />
+
+                                    <input type="button" value="+" id="btn_addQual" class="input-group-text" />
+                                </div>
+                                <ul id='list_qualification' class="tags ps-0">
+                                </ul>
+
                             </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100" type="submit">Add New Job</button>
+
+                            <div class="col-12 col-sm-6">
+                                <div class="input-group mb-4">
+
+                                    <input type="text" id="tb_skills" class="form-control bg-white" placeholder="Skills" />
+                                    <input type="button" value="+" id="btn_addSkills" class="input-group-text"/>
+                                    </div>
+
+                                    <ul id='list_skills' class="tags ps-0">
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <select type="text" class="form-select">
+                                        <option selected>Job Shift</option>
+                                        <option>Day</option>
+                                        <option>Afternoon</option>
+                                        <option>Night</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                  <!--  <input class="form-control bg-white" placeholder="Experience">-->
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control bg-white" placeholder="Experience from">
+                                        <span class="input-group-text">to</span>
+                                        <input type="text" class="form-control" placeholder="Experience to" >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control" rows="2" placeholder="Requirements"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control" rows="2" placeholder="Responsibilities"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control" rows="2" placeholder="Additonal Description"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit">Add New Job</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+</form>
                 </div>
             </div>
         </div>
@@ -84,3 +112,15 @@
 @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
 
 <script src="~/js/AddNewJobImplementation.js"></script>
+
+<style>
+
+    ul.tags li {
+        display: inline;
+        margin-right: 10px;
+        color: #666565;
+        background-color: #e6f0ff;
+        padding: 10px;
+        border-radius:15px;
+    }
+</style>

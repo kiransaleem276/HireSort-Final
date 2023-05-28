@@ -122,5 +122,18 @@ function _displayItemsVacancy(data) {
 }
 
 
+document.getElementById("btn_addQual").onclick = function () {
+    var text = document.getElementById("tb_qual").value;
+    var li = "<li>" + text + "</li>";
+    document.getElementById("list_qualification").insertAdjacentHTML('beforeend', li);
+    document.getElementById("tb_qual").value = ""; // clear the value
+}
 
+
+document.getElementById("btn_addSkills").onclick = function () {
+    var text = document.getElementById("tb_skills").value;
+    var li = "<li>" + text + "</li>";
+    document.getElementById("list_skills").insertAdjacentHTML('beforeend', li);
+    document.getElementById("tb_skills").value = ""; // clear the value
+}
 
