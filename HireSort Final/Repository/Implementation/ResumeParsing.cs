@@ -9,6 +9,8 @@ using HireSort.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Sovren;
 using Sovren.Models.API.Parsing;
+using System.Net;
+using System.Net.Mail;
 
 namespace HireSort.Repository.Implementation
 {
@@ -22,7 +24,7 @@ namespace HireSort.Repository.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task<ApiResponseMessage> ResumeUpload(IFormFile file, int jobId,int? clientId, string firstName = null, string lastName = null, string email = null, string coverLetter = null)
+        public async Task<ApiResponseMessage> ResumeUpload(IFormFile file, int jobId, int? clientId, string firstName = null, string lastName = null, string email = null, string coverLetter = null)
         {
             try
             {
@@ -52,6 +54,21 @@ namespace HireSort.Repository.Implementation
                 {
                     file.CopyTo(fileStream);
                 }
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("kiran.saleem276@gmail.com");
+                message.To.Add(new MailAddress(email));
+                message.Subject = "Test";
+                message.IsBodyHtml = true; //to make message body as html
+                message.Body = "<h1>Hello</h1>";
+                NetworkCredential loginInfo = new NetworkCredential("hiresort@fast.com", "F2F902AC2FA4B7DBC7C1ACCC736A7E774FAC"); // password for connection smtp if u dont have have then pass blank
+
+                SmtpClient smtp = new SmtpClient("smtp.elasticemail.com", 2525);
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.Credentials = loginInfo;
+                smtp.EnableSsl = true;
+                smtp.Send(message);
+
                 return CommonHelper.GetApiSuccessResponse("Success.");
 
                 //return "Success.";
