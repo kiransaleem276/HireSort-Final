@@ -61,6 +61,8 @@ function applyNow(fname, lname, email, files, coverLetter) {
                 //location.reload();
                 //getResumeList();
                 alert("Files Uploaded!");
+
+                document.getElementById("frmApply").reset();
             },
             error: function (data) {
                 // location.reload();

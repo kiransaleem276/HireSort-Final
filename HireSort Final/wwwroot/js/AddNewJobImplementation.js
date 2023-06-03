@@ -15,7 +15,12 @@ const ddl_Dept = document.getElementById('department');
 
 
 $(document).ready(function () {
+
     getItemsDept();
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 });
 
 // Get Department Dropdown
@@ -85,6 +90,7 @@ $.ajax(
         tradditional: true,
         success: function (data) {
             alert("Job Posted");
+            document.getElementById("frmAddNewJob").reset();
         },
         error: function (data) {
             alert(data);

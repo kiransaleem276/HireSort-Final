@@ -13,10 +13,10 @@
                 <div class="addjob-form">
                     <div class="row g-3 my-4">
                         <div class="col-8"><h4 class="mb-4">Add New Job Vacancy</h4></div>
-                        <div class="col-4 text-end">  <a href="javascript:history.go(-1)" class="btn btn-primary w-50">Back</a></div>
+                      
                     </div>
                     <hr />
-                    <form>
+                    <form id="frmAddNewJob">
                         <div class="row g-3 my-4">
                             <div class="col-12 col-sm-6">
                                 <input name="ClientId" value="1" type="number" class="d-none">
@@ -55,7 +55,7 @@
                             <div class="col-12 col-sm-6">
                                 <div class="input-group mb-4">
 
-                                    <input type="text" id="tb_skills" class="form-control bg-white" placeholder="Skills" />
+                                    <input type="text" id="tb_skills" class="form-control bg-white" placeholder="Skills" data-toggle="tooltip" data-placement="bottom" title="Please make use of all the terms, including their abbreviations while adding the skills."/>
                                     <input type="button" value="+" id="btn_addSkills" class="input-group-text" />
                                 </div>
 
@@ -98,11 +98,6 @@
                         </div>
                     </form>
 
-
-                    <div class="results">
-                        <h2>Form Data</h2>
-                        <pre></pre>
-                    </div>
                 </div>
             </div>
         </div>
