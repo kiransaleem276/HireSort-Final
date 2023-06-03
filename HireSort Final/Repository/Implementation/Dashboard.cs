@@ -181,7 +181,9 @@ namespace HireSort.Repository.Implementation
                     JobEndDate = (s.EndDate != null) ? Convert.ToDateTime(s.EndDate).ToString(_dateFormat) : null,
                     JobShift = s.JobDetails.FirstOrDefault(a => a.JobCode.CodeName == "Job Shift").Description ?? null,
                     JobType = s.JobDetails.FirstOrDefault(b => b.JobCode.CodeName == "Job Type").Description ?? null,
-                    JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName != "Job Shift" && w.JobCode.CodeName != "Job Type").Select(s => new JobDescription
+                    Experience = s.ExperienceFrom + " - " + s.ExperienceTo + " years of experience",
+                    //JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName != "Job Shift" && w.JobCode.CodeName != "Job Type" && w.JobCode.CodeName != "Experience").Select(s => new JobDescription
+                    JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName == "Additional Description" || w.JobCode.CodeName == "Skills" || w.JobCode.CodeName == "Requirements" || w.JobCode.CodeName == "Responsibility" || w.JobCode.CodeName == "Salary Package").Select(s => new JobDescription
                     {
                         JobDetailId = s.Id,
                         JobCode = s.JobCode.CodeName,
@@ -426,6 +428,18 @@ namespace HireSort.Repository.Implementation
                     jobDetail.JobId = job.JobId;
                     jobDetail.JobCodeId = 1;
                     jobDetail.Description = jobDetails.Responsibility;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Requirement != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 9;
+                    jobDetail.Description = jobDetails.Requirement;
                     jobDetail.ClientId = jobDetails.ClientId ?? 0;
                     jobDetail.CreatedBy = jobDetails.ClientId.ToString();
                     jobDetail.CreatedOn = DateTime.Now;

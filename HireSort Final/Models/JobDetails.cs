@@ -8,6 +8,7 @@
         public string? JobEndDate { get; set; }
         public string? JobType { get; set; }
         public string? JobShift { get; set; }
+        public string? Experience { get; set; }
         public List<JobDescription>? JobDesc { get; set; }
     }
     public class JobDescription

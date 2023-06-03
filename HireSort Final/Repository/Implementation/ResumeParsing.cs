@@ -156,7 +156,7 @@ namespace HireSort.Repository.Implementation
 
                                 //Initutte Name Match
                                 if (institute != null && edu.Degree?.Type == "bachelors" &&
-                                     ((edu.Text?.ToLower().Trim().Equals(institute.ToLower().Trim()) ?? false) || (edu.Text?.ToLower().Trim().Contains(institute.ToLower().Trim()) ?? false) || Fuzz.TokenInitialismRatio(edu.Text ?? null, institute) > 80))
+                                     ((edu.SchoolName?.Normalized?.ToLower().Trim().Contains(institute.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.SchoolName?.Normalized?.ToLower().Trim().Contains(institute.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text ?? null, institute) > 80))
                                 {
                                     resume.InstituteMatch = "Yes";
                                     Compatibility += parsingPercentage?.InstitutePercentage ?? 0;
@@ -164,7 +164,7 @@ namespace HireSort.Repository.Implementation
                                 }
 
                                 var education = vacancy.JobDetails.FirstOrDefault(w => w.JobCodeId == 4).Description;
-                                if ((edu.Text?.ToLower().Trim().Equals(education) ?? false) || (edu.Text?.ToLower().Trim().Contains(education) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
+                                if ((edu.Degree?.Name?.Normalized.ToLower().Trim().Equals(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.Text?.ToLower().Trim().Contains(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
                                 {
                                     eduMatch = true;
                                 }
@@ -244,7 +244,7 @@ namespace HireSort.Repository.Implementation
                                 int skillMatchCount = 0;
                                 foreach (var skill in jobSkills)
                                 {
-                                    if (technicalSkills.Any(a => a.Skills.Equals(skill.Description, StringComparison.CurrentCultureIgnoreCase)))
+                                    if (technicalSkills.Any(a => a.Skills.Contains(skill.Description, StringComparison.CurrentCultureIgnoreCase)))
                                     {
                                         skillMatchCount++;
                                     }

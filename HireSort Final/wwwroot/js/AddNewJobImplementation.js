@@ -66,45 +66,27 @@ function handleFormSubmit(event) {
     event.preventDefault();
 
     const getFormData = new FormData(event.target);
-    getFormData.keys = "jobDetail"
 
     const formJSON = Object.fromEntries(getFormData.entries());
-
     // for multi-selects, we need special handling
     formJSON.Skills = getFormData.getAll("Skills");
-    var result = `{"jobDetail": ${JSON.stringify(formJSON)}}`;
-    console.log(result);
 
-    const results = document.querySelector('.results pre');
-    results.innerText = JSON.stringify(result, null, 2);
-
-
-    var test = {
-        jobDetail:
-            +formJSON
-};
-//results.innerText = JSON.stringify(result, null, 2);
+    //const results = document.querySelector('.results pre');
+    //results.innerText = JSON.stringify(result, null, 2);
 
 $.ajax(
     {
 
         url: `/api/dashboard/add-job`,
-        value: "jobDetail",
-        data: {
-            jobDetail: JSON.stringify(formJSON)
-        },
-        contentType: "application/json",
+        data: JSON.stringify(formJSON) ,
+        contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: 'json',
         tradditional: true,
         success: function (data) {
-            //location.reload();
-            //getResumeList();
             alert("Job Posted");
         },
         error: function (data) {
-            // location.reload();
-            //getResumeList();
             alert(data);
         }
     }

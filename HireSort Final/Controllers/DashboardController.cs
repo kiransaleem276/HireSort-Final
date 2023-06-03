@@ -212,10 +212,10 @@ namespace HireSort.Controllers
 
         [HttpPost]
         [Route("add-job")]
-        public async Task<IActionResult> AddJob(string jobDetail="")
+        public async Task<IActionResult> AddJob([FromBody] AddJobDetail jobDetail)
         {
-            var detail = JsonConvert.DeserializeObject<AddJobDetail>(jobDetail);
-            var result = await _dashboard.AddJob(detail);
+            //var detail = JsonConvert.DeserializeObject<AddJobDetail>(jobDetail);
+            var result = await _dashboard.AddJob(jobDetail);
             if (result.StatusCode == 400)
             {
                 return BadRequest(result);
