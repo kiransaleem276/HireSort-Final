@@ -5,6 +5,7 @@ using HireSort.Repository.Interface;
 using HireSort_Final.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HireSort.Controllers
 {
@@ -208,12 +209,13 @@ namespace HireSort.Controllers
             return BadRequest();
         }
 
-       
+
         [HttpPost]
         [Route("add-job")]
-        public async Task<IActionResult> AddJob(AddJobDetail jobDetail)
+        public async Task<IActionResult> AddJob(string jobDetail="")
         {
-            var result = await _dashboard.AddJob(jobDetail);
+            var detail = JsonConvert.DeserializeObject<AddJobDetail>(jobDetail);
+            var result = await _dashboard.AddJob(detail);
             if (result.StatusCode == 400)
             {
                 return BadRequest(result);

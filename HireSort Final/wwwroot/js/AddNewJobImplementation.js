@@ -5,17 +5,17 @@
 //script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
 //document.getElementsByTagName('head')[0].appendChild(script);
 
+
+
 const uriDept = '/api/Dashboard/departments';
 //const uriVacancyList = 'api/Dashboard/department-and-vacancies-details';
 //const uriVacancyCount = 'api/Dashboard/depart-vacancy-count';
 
 const ddl_Dept = document.getElementById('department');
 
-const ddl_Vac = $('#vacancy');
-
 
 $(document).ready(function () {
-        getItemsDept();   
+    getItemsDept();
 });
 
 // Get Department Dropdown
@@ -25,7 +25,7 @@ function getItemsDept() {
         .then(data => _displayItemsDept(data))
         .catch(error => console.error('Unable to get items.', error));
 
-    getItemsVacancy();
+
 }
 
 function _displayItemsDept(data) {
@@ -53,87 +53,66 @@ function _displayItemsDept(data) {
 
 }
 
-$("#department").change(function () {
-  
-    getItemsVacancy();
-    ddl_Vac.empty();
-
-});
-
-$("#btn_Search").click(function myfunction() {
-
-    var dpt_id = ddl_Dept.value;
-    var vac_Id = ddl_Vac.val();
-
-    //alert("Handler for .change() called." + ` with ids dept: ${dpt_id} and vacId: ${vac_Id}`);
-
-
-    //fetch(uri, {
-    //    method: 'POST',
-    //    headers: {
-    //        'Accept': 'application/json',
-    //        'Content-Type': 'application/json'
-    //    },
-    //    body: JSON.stringify(item)
-    //})
-    var filteredVacList = `/api/Dashboard/department-and-vacancies-details?departId=${dpt_id}&vacancyId=${vac_Id}`
-
-    fetch(filteredVacList)
-        .then(response => response.json())
-        .then(data => _displayItemsVacancyList(data))
-        .catch(error => console.error('Unable to get items.', error));
-
-});
-// Get Vacancy Dropdown
-function getItemsVacancy() {
-
-    var deptid = ddl_Dept.value;
-    console.log(ddl_Dept.options[ddl_Dept.selectedIndex].text);
-    console.log(ddl_Dept.value);
-    if (deptid == "")
-        deptid = '1';
-
-    const uriVacancy = `/api/Dashboard/vacancies-department-wise?departId=${deptid}`;
-    fetch(uriVacancy)
-        .then(response => response.json())
-        .then(data => _displayItemsVacancy(data))
-        .catch(error => console.error('Unable to get items.', error));
-}
-
-function _displayItemsVacancy(data) {
-
-   
-    const ddl_Vac = document.getElementById('vacancy');
-   
-
-    if (data.statusCode == 200) {
-        var parsedata = data.successData;
-
-        parsedata.forEach(item => {
-
-            let option_elem = document.createElement('option');
-            option_elem.value = item.vacancyId;
-            option_elem.textContent = item.vacancyName;
-            ddl_Vac.appendChild(option_elem);
-        });
-
-    }
-
-}
-
-
-document.getElementById("btn_addQual").onclick = function () {
-    var text = document.getElementById("tb_qual").value;
-    var li = "<li>" + text + "</li>";
-    document.getElementById("list_qualification").insertAdjacentHTML('beforeend', li);
-    document.getElementById("tb_qual").value = ""; // clear the value
-}
-
-
 document.getElementById("btn_addSkills").onclick = function () {
     var text = document.getElementById("tb_skills").value;
+    var cbInvisibleSkill = `<input name='Skills' value='${text}' class='d-none'>`;
     var li = "<li>" + text + "</li>";
     document.getElementById("list_skills").insertAdjacentHTML('beforeend', li);
+    document.getElementById("cb_skills").insertAdjacentHTML('beforeend', cbInvisibleSkill);
     document.getElementById("tb_skills").value = ""; // clear the value
 }
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const getFormData = new FormData(event.target);
+    getFormData.keys = "jobDetail"
+
+    const formJSON = Object.fromEntries(getFormData.entries());
+
+    // for multi-selects, we need special handling
+    formJSON.Skills = getFormData.getAll("Skills");
+    var result = `{"jobDetail": ${JSON.stringify(formJSON)}}`;
+    console.log(result);
+
+    const results = document.querySelector('.results pre');
+    results.innerText = JSON.stringify(result, null, 2);
+
+
+    var test = {
+        jobDetail:
+            +formJSON
+};
+//results.innerText = JSON.stringify(result, null, 2);
+
+$.ajax(
+    {
+
+        url: `/api/dashboard/add-job`,
+        value: "jobDetail",
+        data: {
+            jobDetail: JSON.stringify(formJSON)
+        },
+        contentType: "application/json",
+        type: "POST",
+        dataType: 'json',
+        tradditional: true,
+        success: function (data) {
+            //location.reload();
+            //getResumeList();
+            alert("Job Posted");
+        },
+        error: function (data) {
+            // location.reload();
+            //getResumeList();
+            alert(data);
+        }
+    }
+);
+}
+
+const form = document.querySelector('.addjob-form');
+form.addEventListener('submit', handleFormSubmit);
+
+
 
