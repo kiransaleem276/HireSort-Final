@@ -310,11 +310,13 @@ namespace HireSort.Repository.Implementation
                 job.JobName = jobDetails.JobTitle ?? "";
                 job.ClientId = jobDetails.ClientId ?? 0;
                 job.DepartmentId = jobDetails.DepartId;
-                job.StartDate = jobDetails.StartDate??DateTime.Now;
+                job.StartDate = jobDetails.StartDate ?? DateTime.Now;
                 job.EndDate = jobDetails.EndDate;
                 job.IsActive = true;
                 job.CreatedBy = jobDetails.ClientId.ToString();
                 job.CreatedOn = DateTime.Now;
+                job.ExperienceFrom = jobDetails.ExperienceFrom;
+                job.ExperienceTo = jobDetails.ExperienceTo;
 
                 _dbContext.Jobs.Add(job);
                 await _dbContext.SaveChangesAsync();
@@ -385,42 +387,39 @@ namespace HireSort.Repository.Implementation
                     _dbContext.JobDetails.AddRange(jobDetail);
                     _dbContext.SaveChanges();
                 }
-                if (jobDetails.Educations != null && jobDetails.Educations.Count > 0)
+                if (jobDetails.Educations != null)
                 {
                     List<JobDetail> jobDetail = new List<JobDetail>();
-                    foreach (var edu in jobDetails.Educations)
+                    jobDetail.Add(new JobDetail()
                     {
-                        jobDetail.Add(new JobDetail()
-                        {
-                            JobId = job.JobId,
-                            JobCodeId = 4,
-                            Description = edu,
-                            ClientId = jobDetails.ClientId ?? 0,
-                            CreatedBy = jobDetails.ClientId.ToString(),
-                            CreatedOn = DateTime.Now,
-                        });
-                    }
+                        JobId = job.JobId,
+                        JobCodeId = 4,
+                        Description = jobDetails.Educations,
+                        ClientId = jobDetails.ClientId ?? 0,
+                        CreatedBy = jobDetails.ClientId.ToString(),
+                        CreatedOn = DateTime.Now,
+                    });
                     _dbContext.JobDetails.AddRange(jobDetail);
                     _dbContext.SaveChanges();
                 }
-                if (jobDetails.Experiences != null && jobDetails.Experiences.Count > 0)
-                {
-                    List<JobDetail> jobDetail = new List<JobDetail>();
-                    foreach (var exp in jobDetails.Experiences)
-                    {
-                        jobDetail.Add(new JobDetail()
-                        {
-                            JobId = job.JobId,
-                            JobCodeId = 2,
-                            Description = exp,
-                            ClientId = jobDetails.ClientId ?? 0,
-                            CreatedBy = jobDetails.ClientId.ToString(),
-                            CreatedOn = DateTime.Now,
-                        });
-                    }
-                    _dbContext.JobDetails.AddRange(jobDetail);
-                    _dbContext.SaveChanges();
-                }
+                //if (jobDetails.Experiences != null && jobDetails.Experiences.Count > 0)
+                //{
+                //    List<JobDetail> jobDetail = new List<JobDetail>();
+                //    foreach (var exp in jobDetails.Experiences)
+                //    {
+                //        jobDetail.Add(new JobDetail()
+                //        {
+                //            JobId = job.JobId,
+                //            JobCodeId = 2,
+                //            Description = exp,
+                //            ClientId = jobDetails.ClientId ?? 0,
+                //            CreatedBy = jobDetails.ClientId.ToString(),
+                //            CreatedOn = DateTime.Now,
+                //        });
+                //    }
+                //    _dbContext.JobDetails.AddRange(jobDetail);
+                //    _dbContext.SaveChanges();
+                //}
                 if (jobDetails.Responsibility != null)
                 {
                     JobDetail jobDetail = new JobDetail();
@@ -433,7 +432,7 @@ namespace HireSort.Repository.Implementation
                     _dbContext.JobDetails.Add(jobDetail);
                     _dbContext.SaveChanges();
                 }
-                return CommonHelper.GetApiSuccessResponse("Success",200);
+                return CommonHelper.GetApiSuccessResponse("Success", 200);
             }
             catch (Exception ex)
             {

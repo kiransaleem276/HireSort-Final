@@ -33,7 +33,7 @@ namespace HireSort.Repository.Implementation
                 var resume = new Resume();
                 resume.JobId = jobId;
                 resume.FileExt = System.IO.Path.GetExtension(file.FileName);
-                resume.ClientId = clientId;
+                resume.ClientId = clientId ?? 0;
                 resume.FirstName = firstName;
                 resume.LastName = lastName;
                 resume.Email = email;
@@ -84,11 +84,24 @@ namespace HireSort.Repository.Implementation
         {
 
             var resume = _dbContext.Resumes.Where(w => w.ClientId == clientId && w.JobId == jobId && w.Id == resumeId && w.IsFileParsed != true).FirstOrDefault();
-            if (resume != null)
+
+            var vacancy = _dbContext.Jobs.Where(w => w.ClientId == clientId && w.JobId == jobId).Select(s => new
+            {
+                s.JobName,
+                s.EndDate,
+                s.StartDate,
+                s.ExperienceFrom,
+                s.ExperienceTo,
+                s.JobDetails
+            }).FirstOrDefault();
+
+            var parsingPercentage = _dbContext.ClientWisePercentMappings.Where(w => w.ClientId == clientId).FirstOrDefault();
+            if (resume != null && vacancy != null)
             {
                 try
                 {
-                    double gpaPer = 30, insPer = 20, expPer = 25, eduPer = 10, skillPer = 15;
+                    //double gpaPer = 30, insPer = 20, expPer = 25, eduPer = 10, skillPer = 15;
+                    double eduPer = parsingPercentage?.EducationPercentage ?? 0, expPer = parsingPercentage?.ExperiencePercentage ?? 0, skillPer = parsingPercentage?.SkillsPercentage ?? 0;
 
                     var clientHighlights = _dbContext.ClientHighlights.Where(w => w.ClientId == clientId && w.IsActive == true).ToList();
                     var gpa = clientHighlights?.Where(w => w.Category == "gpa").Select(s => s.Description).FirstOrDefault();
@@ -131,14 +144,14 @@ namespace HireSort.Repository.Implementation
                                 {
                                     if (Convert.ToDouble(edu.GPA?.Score) >= Convert.ToDouble(gpa))
                                     {
-                                        Compatibility += gpaPer;
+                                        Compatibility += parsingPercentage?.GpaPercentage ?? 0;
                                     }
                                     else
                                     {
-                                        Compatibility += (Convert.ToDouble(edu.GPA?.Score) / Convert.ToDouble(gpa)) * gpaPer;
+                                        Compatibility += (Convert.ToDouble(edu.GPA?.Score) / Convert.ToDouble(gpa)) * parsingPercentage?.GpaPercentage ?? 0;
                                     }
                                     resume.Gpa = edu.GPA?.Score;
-                                    percentage -= gpaPer;
+                                    percentage -= parsingPercentage?.GpaPercentage ?? 0;
                                 }
 
                                 //Initutte Name Match
@@ -146,11 +159,12 @@ namespace HireSort.Repository.Implementation
                                      ((edu.Text?.ToLower().Trim().Equals(institute.ToLower().Trim()) ?? false) || (edu.Text?.ToLower().Trim().Contains(institute.ToLower().Trim()) ?? false) || Fuzz.TokenInitialismRatio(edu.Text ?? null, institute) > 80))
                                 {
                                     resume.InstituteMatch = "Yes";
-                                    Compatibility += insPer;
-                                    percentage -= insPer;
+                                    Compatibility += parsingPercentage?.InstitutePercentage ?? 0;
+                                    percentage -= parsingPercentage?.InstitutePercentage ?? 0;
                                 }
 
-                                if ((edu.Text?.ToLower().Trim().Equals("bsc") ?? false) || (edu.Text?.ToLower().Trim().Contains("bsc") ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), "bsc") > 80)
+                                var education = vacancy.JobDetails.FirstOrDefault(w => w.JobCodeId == 4).Description;
+                                if ((edu.Text?.ToLower().Trim().Equals(education) ?? false) || (edu.Text?.ToLower().Trim().Contains(education) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
                                 {
                                     eduMatch = true;
                                 }
@@ -178,6 +192,8 @@ namespace HireSort.Repository.Implementation
                         }
                         if (parseResponse.Value.ResumeData.EmploymentHistory.Positions.Count > 0)
                         {
+                            var minExp = vacancy.ExperienceFrom * 12;
+                            var maxExp = vacancy.ExperienceTo * 12;
                             foreach (var job in parseResponse.Value.ResumeData.EmploymentHistory.Positions)
                             {
                                 //if(job.StartDate!=null || job.EndDate != null)
@@ -199,13 +215,13 @@ namespace HireSort.Repository.Implementation
                                 });
                             }
                             int totalExp = workHistory.Sum(s => s.TotalExperience);
-                            if (totalExp >= 40)
+                            if (totalExp >= minExp)
                             {
                                 Compatibility += expPer;
                             }
                             else
                             {
-                                Compatibility += (totalExp / totalExp) * expPer;
+                                Compatibility += (totalExp / minExp ?? 0) * expPer;
                             }
                             _dbContext.Experiences.AddRange(workHistory);
                             _dbContext.SaveChanges();
@@ -221,6 +237,30 @@ namespace HireSort.Repository.Implementation
 
                             _dbContext.TechnicalSkills.AddRange(technicalSkills);
                             _dbContext.SaveChanges();
+
+                            var jobSkills = vacancy.JobDetails.Where(w => w.JobCodeId == 3).ToList();
+                            if (jobSkills.Count > 0)
+                            {
+                                int skillMatchCount = 0;
+                                foreach (var skill in jobSkills)
+                                {
+                                    if (technicalSkills.Any(a => a.Skills.Equals(skill.Description, StringComparison.CurrentCultureIgnoreCase)))
+                                    {
+                                        skillMatchCount++;
+                                    }
+                                }
+                                if (skillMatchCount > 0)
+                                {
+                                    if (skillMatchCount >= jobSkills.Count)
+                                    {
+                                        Compatibility += skillPer;
+                                    }
+                                    else
+                                    {
+                                        Compatibility += (skillMatchCount / jobSkills.Count) * skillPer;
+                                    }
+                                }
+                            }
                         }
 
                         if (parseResponse.Value.ResumeData.ContactInformation.WebAddresses != null && parseResponse.Value.ResumeData.ContactInformation.WebAddresses.Count > 0)

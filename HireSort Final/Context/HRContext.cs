@@ -21,6 +21,7 @@ namespace HireSort.Context
         public virtual DbSet<Certification> Certifications { get; set; } = null!;
         public virtual DbSet<Client> Clients { get; set; } = null!;
         public virtual DbSet<ClientHighlight> ClientHighlights { get; set; } = null!;
+        public virtual DbSet<ClientWisePercentMapping> ClientWisePercentMappings { get; set; } = null!;
         public virtual DbSet<ContactU> ContactUs { get; set; } = null!;
         public virtual DbSet<Department> Departments { get; set; } = null!;
         public virtual DbSet<Education> Educations { get; set; } = null!;
@@ -131,6 +132,31 @@ namespace HireSort.Context
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__CLIENT_HI__CLIEN__32E0915F");
+            });
+
+            modelBuilder.Entity<ClientWisePercentMapping>(entity =>
+            {
+                entity.ToTable("CLIENT_WISE_PERCENT_MAPPING");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.ClientId).HasColumnName("CLIENT_ID");
+
+                entity.Property(e => e.EducationPercentage).HasColumnName("EDUCATION_PERCENTAGE");
+
+                entity.Property(e => e.ExperiencePercentage).HasColumnName("EXPERIENCE_PERCENTAGE");
+
+                entity.Property(e => e.GpaPercentage).HasColumnName("GPA_PERCENTAGE");
+
+                entity.Property(e => e.InstitutePercentage).HasColumnName("INSTITUTE_PERCENTAGE");
+
+                entity.Property(e => e.SkillsPercentage).HasColumnName("SKILLS_PERCENTAGE");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.ClientWisePercentMappings)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CLIENT_WI__CLIEN__07C12930");
             });
 
             modelBuilder.Entity<ContactU>(entity =>
@@ -297,6 +323,10 @@ namespace HireSort.Context
                 entity.Property(e => e.EndDate)
                     .HasColumnType("datetime")
                     .HasColumnName("END_DATE");
+
+                entity.Property(e => e.ExperienceFrom).HasColumnName("EXPERIENCE_FROM");
+
+                entity.Property(e => e.ExperienceTo).HasColumnName("EXPERIENCE_TO");
 
                 entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
 

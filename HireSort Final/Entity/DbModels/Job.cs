@@ -20,6 +20,8 @@ namespace HireSort.Entity.DbModels
         public bool IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
+        public int? ExperienceFrom { get; set; }
+        public int? ExperienceTo { get; set; }
 
         public virtual Client Client { get; set; } = null!;
         public virtual Department Department { get; set; } = null!;

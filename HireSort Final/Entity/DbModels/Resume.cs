@@ -15,7 +15,7 @@ namespace HireSort.Entity.DbModels
         }
 
         public int Id { get; set; }
-        public int? ClientId { get; set; }
+        public int ClientId { get; set; }
         public int JobId { get; set; }
         public bool? IsShortlisted { get; set; }
         public DateTime? ShortlistDate { get; set; }

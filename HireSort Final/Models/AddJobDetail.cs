@@ -13,8 +13,10 @@
         public string? JobType { get; set; }
         public string? JobShift { get; set; }
         public string? AdditionalDesc { get; set; }
-        public List<string>? Educations { get; set; }
+        public int? ExperienceFrom { get; set; }
+        public int? ExperienceTo { get; set; }
+        public string? Educations { get; set; }
         public List<string>? Skills { get; set; }
-        public List<string>? Experiences { get; set; }
+        //public List<string>? Experiences { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace HireSort.Entity.DbModels
         {
             AbountUs = new HashSet<AbountU>();
             ClientHighlights = new HashSet<ClientHighlight>();
+            ClientWisePercentMappings = new HashSet<ClientWisePercentMapping>();
             ContactUs = new HashSet<ContactU>();
             Departments = new HashSet<Department>();
             Homes = new HashSet<Home>();
@@ -27,6 +28,7 @@ namespace HireSort.Entity.DbModels
 
         public virtual ICollection<AbountU> AbountUs { get; set; }
         public virtual ICollection<ClientHighlight> ClientHighlights { get; set; }
+        public virtual ICollection<ClientWisePercentMapping> ClientWisePercentMappings { get; set; }
         public virtual ICollection<ContactU> ContactUs { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Home> Homes { get; set; }
