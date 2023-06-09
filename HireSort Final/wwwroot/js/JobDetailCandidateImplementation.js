@@ -43,7 +43,8 @@ function applyNow(fname, lname, email, files, coverLetter) {
     var file = fileName.files;
 
     if (firstname == "" || lastname == "" || emailAdd == "" || file.length == 0) {
-        alert("Please fill the form correctly.");
+        //alert("Please fill the form correctly.");
+        $('#validateform').modal('toggle');
         return;
     }
     var formData = new FormData();
@@ -60,20 +61,48 @@ function applyNow(fname, lname, email, files, coverLetter) {
             success: function (data) {
                 //location.reload();
                 //getResumeList();
-                alert("Files Uploaded!");
+               // alert("Files Uploaded!");
+                $('#jobapplied').modal('toggle');
 
                 document.getElementById("frmApply").reset();
             },
             error: function (data) {
                 // location.reload();
                 //getResumeList();
-                alert(data);
+                console.log(data);
             }
         }
     );
 }
 
 
+//Email Validation
+
+const validateEmail = (email) => {
+    return email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+const validate = () => {
+    const $result = $('#result');
+    const email = $('#email').val();
+    $result.text('');
+
+    if (!validateEmail(email)) {
+        $result.removeClass('d-none');
+        $result.addClass('d-block');
+        $result.addClass('mt-2');
+        $result.text('Email is invalid.');
+      
+    } else {
+        $result.remove('d-block');
+        $result.addClass('d-none');
+    }
+    return false;
+}
+
+$('#email').on('keyup', validate);
 
 
 

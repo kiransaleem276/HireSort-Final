@@ -23,9 +23,9 @@
                     @*<img class="flex-shrink-0 img-fluid border rounded" src="~/img/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">*@
                     <div class="text-start" id="jobDesc">
                         <!-- <h3 class="mb-3">Marketing Manager</h3>
-                    <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>New York, USA</span>
-                    <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>
-                    <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$123 - $456</span>-->
+                        <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>New York, USA</span>
+                        <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span>
+                        <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$123 - $456</span>-->
                     </div>
                 </div>
 
@@ -38,26 +38,26 @@
                     <div id="jobResponsibility">
                         <!--   <h4 class="mb-3">Responsibility</h4>
 
-                    <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
-                    </ul>-->
+                        <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
+                        </ul>-->
                     </div>
                     <div id="jobQualification">
                         <!--   <h4 class="mb-3">Qualifications</h4>
 
-                    <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
-                    </ul>-->
+                        <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
+                            <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
+                        </ul>-->
                     </div>
                 </div>
 
@@ -75,6 +75,8 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <input type="text" class="form-control" placeholder="Email" id="email">
+                                <p id="result" class="text-danger mb-0"></p>
+
                             </div>
                             <div class="col-12 col-sm-6">
                                 <input type="file" class="form-control bg-white" name="files" id="files" size="50">
@@ -97,19 +99,66 @@
                     <h4 class="mb-4">Job Summary</h4>
                     <div id="jobSummary">
                         <!--     <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: 01 Jan, 2045</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: Full Time</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: $123 - $456</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Location: New York, USA</p>
-                    <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: 01 Jan, 2045</p>-->
+                        <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: Full Time</p>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: $123 - $456</p>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i>Location: New York, USA</p>
+                        <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: 01 Jan, 2045</p>-->
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
-    </div>
+</div>
 <!-- Job Detail End -->
+<!--Modal-->
+<div class="modal fade" id="jobapplied" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <h4 for="recipient-name" class="col-form-label">Thankyou for applying.</h4>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="validateform" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <h4 for="recipient-name" class="col-form-label">Please fill the form correctly.</h4>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@

@@ -125,10 +125,27 @@ function _displayResumeInd(data) {
 
             let btnShortlist = document.createElement('a');
             btnShortlist.classList.add('btn', 'btn-primary', 'ms-3');
-            let textShortlist = document.createTextNode("Shortlist");
-            btnShortlist.href = `javascript:resumeShortlist(${resumeID});`
+          //  let textShortlist = document.createTextNode("Shortlist");
+           // btnShortlist.href = `javascript:resumeShortlist(${resumeID});`
 
-            btnShortlist.appendChild(textShortlist);
+           // btnShortlist.appendChild(textShortlist);
+
+            if (item.isShortListed == true) {
+                let textShortlist = document.createTextNode("Shortlisted!");
+                btnShortlist.setAttribute('style', 'background-color:#85d6bb !important');
+                btnShortlist.href = `javascript:void(0);`
+                btnShortlist.appendChild(textShortlist);
+
+            }
+
+            else {
+                let textShortlist = document.createTextNode("\n Shortlist \n");
+                btnShortlist.classList.add('px-4');
+                btnShortlist.href = `javascript:resumeShortlist(${resumeID});`
+                btnViewDetails.appendChild(textShortlist);
+
+
+            }
 
             txtEmail.appendChild(iconEmail);
             txtMobile.appendChild(iconMobile);

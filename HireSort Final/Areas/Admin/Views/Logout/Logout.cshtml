@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Log In";
+}
+
+
+<!-- Add New Job  -->
+
+<div class="container-xxl loginCard py-5 mt-5 wow fadeInUp " data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row gy-5 gx-4">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="text-center">
+                        <img src="~/img/logo_hiresort.png" height="80" />
+                    </div>
+                    <form>
+                        <div class="row g-3 my-4">
+                            <div class="col-12 text-center">
+                                <h3 class="text-primary">You have logged out</h3>
+                                <label class="form-label">Thankyou for using HireSort</label>
+                               
+                            </div>
+                           
+                            <div class="col-12">
+                                <a  class="btn btn-primary w-100 mt-3 py-2" asp-area="Admin" asp-controller="Login" asp-action="Login">Log In Now</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add New End -->
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
+
+<script src="~/js/LoginImplementation.js"></script>
+
+
+<style>
+    .container-xxl {
+        max-width: 550px !important;
+    }
+
+        .container-xxl.loginCard {
+            box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+        }
+
+    .footer {
+        display: none;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    #pagescroll {
+        display: none;
+    }
+</style>

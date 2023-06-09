@@ -59,6 +59,7 @@ function _displayItemsDept(data) {
 }
 
 document.getElementById("btn_addSkills").onclick = function () {
+    document.getElementById("list_skills").style.display = "inline-block";
     var text = document.getElementById("tb_skills").value;
     var cbInvisibleSkill = `<input name='Skills' value='${text}' class='d-none'>`;
     var li = "<li>" + text + "</li>";
@@ -89,11 +90,13 @@ $.ajax(
         dataType: 'json',
         tradditional: true,
         success: function (data) {
-            alert("Job Posted");
+            $('#jobposted').modal('toggle');
+
             document.getElementById("frmAddNewJob").reset();
         },
         error: function (data) {
-            alert(data);
+           // $('#jobposted').modal('toggle');
+            console.log(data);
         }
     }
 );
@@ -101,6 +104,5 @@ $.ajax(
 
 const form = document.querySelector('.addjob-form');
 form.addEventListener('submit', handleFormSubmit);
-
 
 

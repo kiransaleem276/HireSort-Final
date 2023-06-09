@@ -13,7 +13,7 @@
                 <div class="addjob-form">
                     <div class="row g-3 my-4">
                         <div class="col-8"><h4 class="mb-4">Add New Job Vacancy</h4></div>
-                      
+
                     </div>
                     <hr />
                     <form id="frmAddNewJob">
@@ -42,10 +42,10 @@
                             </div>
 
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Start Date" type="date" name="StartDate">
+                                <input class="form-control bg-white" placeholder="Start Date : " type="date" name="StartDate" />
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="End Date" type="date" name="EndDate">
+                                <input class="form-control bg-white" placeholder="End Date : " type="date" name="EndDate">
                             </div>
                             <div class="col-12 col-sm-6">
                                 <input class="form-control bg-white" placeholder="Qualification" name="Educations">
@@ -55,11 +55,11 @@
                             <div class="col-12 col-sm-6">
                                 <div class="input-group mb-4">
 
-                                    <input type="text" id="tb_skills" class="form-control bg-white" placeholder="Skills" data-toggle="tooltip" data-placement="bottom" title="Please make use of all the terms, including their abbreviations while adding the skills."/>
-                                    <input type="button" value="+" id="btn_addSkills" class="input-group-text" />
+                                    <input type="text" id="tb_skills" class="form-control bg-white" placeholder="Skills" data-toggle="tooltip" data-placement="bottom" title="Please make use of all the terms, including their abbreviations while adding the skills." />
+                                    <input type="button" value="+" id="btn_addSkills" class="input-group-text text-primary" />
                                 </div>
 
-                                <ul id='list_skills' class="tags ps-0">
+                                <ul id='list_skills' class="tags ps-0" style="display:none">
                                 </ul>
 
                                 <div id="cb_skills">
@@ -79,8 +79,8 @@
                                 <!--  <input class="form-control bg-white" placeholder="Experience">-->
                                 <div class="input-group mb-3">
                                     <input class="form-control bg-white" placeholder="Experience from" name="ExperienceFrom" type="number">
-                                    <span class="input-group-text">to</span>
-                                    <input class="form-control" placeholder="Experience to" name="ExperienceTo"  type="number">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt text-primary"></i></span>
+                                    <input class="form-control" placeholder="Experience to" name="ExperienceTo" type="number">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -103,7 +103,31 @@
         </div>
     </div>
 </div>
+
 <!-- Add New End -->
+<!--Modal-->
+<div class="modal fade" id="jobposted" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <h4 for="recipient-name" class="col-form-label">Job has been posted.</h4>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
@@ -118,6 +142,13 @@
         color: #666565;
         background-color: #e6f0ff;
         padding: 10px;
-        border-radius:15px;
+        border-radius: 15px;
     }
+
+    input[type="date"]:before {
+        content: attr(placeholder);
+        padding-right:5px;
+    }
+
 </style>
+

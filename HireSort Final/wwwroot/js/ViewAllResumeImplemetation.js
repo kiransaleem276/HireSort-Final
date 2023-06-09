@@ -234,13 +234,32 @@ function _displayResumeList(data) {
           
 
             }
+
+
+            if (item.emailAddress == null) {
+                iconEmail.classList.add('d-none');
+                
+            } else {
+                iconEmail.classList.add('d-inline');
+            }
+
+            if (item.mobileNo == null) {
+                iconMobile.classList.add('d-none');
+
+            } else {
+                iconMobile.classList.add('d-inline');
+            }
           
-            txtEmail.appendChild(iconEmail);
-            txtMobile.appendChild(iconMobile);
+           // txtEmail.appendChild(iconEmail);
+           //txtMobile.appendChild(iconMobile);
+          
             divText.appendChild(txtCandidate);
+            divText.appendChild(iconEmail);
             divText.appendChild(txtEmail);
+            divText.appendChild(iconMobile);
             divText.appendChild(txtMobile);
-                divBtnFlx.appendChild(progressMain);
+
+            divBtnFlx.appendChild(progressMain);
             divCol.appendChild(icon);
             divCol.appendChild(divText);
 

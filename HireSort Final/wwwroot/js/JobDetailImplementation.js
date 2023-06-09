@@ -33,43 +33,6 @@ $(document).ready(function () {
 
 
 
-//Apply Now Functionality
-function applyNow(fname, lname, email, files, coverLetter) {
-    var firstname = document.getElementById(fname).value;
-    var lastname = document.getElementById(lname).value;
-    var emailAdd = document.getElementById(email).value;
-    var cover = document.getElementById(coverLetter).value;
-    var fileName = document.getElementById(files);
-    var file = fileName.files;
-
-    if (firstname == "" || lastname == "" || emailAdd == "" || file.length == 0) {
-        alert("Please fill the form correctly.");
-        return;
-    }
-    var formData = new FormData();
-    formData.append("file", file[0]);
-
-    $.ajax(
-        {
-            //url: "/api/dashboard/uplojjjjjjjadfile?jobId=1",
-            url: `/api/dashboard/apply-now?jobId=${vacID}&firstName=${firstname}&lastName=${lastname}&email=${emailAdd}&coverletter="${cover}"&candidate=${candidate}`,
-            data: formData,
-            processData: false,
-            contentType: false,
-            type: "POST",
-            success: function (data) {
-                //location.reload();
-                //getResumeList();
-                alert("Files Uploaded!");
-            },
-            error: function (data) {
-                // location.reload();
-                //getResumeList();
-                alert(data);
-            }
-        }
-    );
-}
 
 
 

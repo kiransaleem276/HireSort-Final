@@ -98,10 +98,12 @@ function _displayResumeList(data) {
             
 
           
-            txtEmail.appendChild(iconEmail);
-            txtMobile.appendChild(iconMobile);
+           // txtEmail.appendChild(iconEmail);
+           // txtMobile.appendChild(iconMobile);
             divText.appendChild(txtCandidate);
+            divText.appendChild(iconEmail);
             divText.appendChild(txtEmail);
+            divText.appendChild(iconMobile);
             divText.appendChild(txtMobile);
 
             divCol.appendChild(icon);
