@@ -4,6 +4,8 @@ var jobID;
 var resumeID;
 /*var departID;*/
 $(document).ready(function () {
+
+   //  $('#spinner').addClass('show');
     //var queryString = window.location.href;
     ////window.location.href.slice(window.location.href.indexOf('?') + 1);
     //const searchParams = queryString.searchParams;
@@ -19,6 +21,9 @@ $(document).ready(function () {
     getCompatibilty();
 
 });
+
+
+
 
 
 
@@ -85,6 +90,7 @@ function getResumeInd() {
 }
 
 function _displayResumeInd(data) {
+   //  $('#spinner').removeClass('show');
     const resumeProfile = document.getElementById('candidateProfile');
     const progressBarInd = document.getElementById('progressBarInd');
 
@@ -102,11 +108,14 @@ function _displayResumeInd(data) {
         parsedata.forEach(item => {
 
             let txtCandidate = document.createElement('h5');
-            txtCandidate.classList.add('card-title');
+            txtCandidate.classList.add('card-title','my-3');
             txtCandidate.textContent = item.candidateName;
 
-            let divCardEmailNo= document.createElement('div');
-            divCardEmailNo.classList.add('ps-4');
+            let divCardEmail= document.createElement('div');
+            divCardEmail.classList.add('ps-4');
+
+            let divCardNo = document.createElement('div');
+            divCardNo.classList.add('ps-4');
 
 
             let txtEmail = document.createElement('span');
@@ -130,7 +139,7 @@ function _displayResumeInd(data) {
 
            // btnShortlist.appendChild(textShortlist);
 
-            if (item.isShortListed == true) {
+          if (item.isShortListed == true) {
                 let textShortlist = document.createTextNode("Shortlisted!");
                 btnShortlist.setAttribute('style', 'background-color:#85d6bb !important');
                 btnShortlist.href = `javascript:void(0);`
@@ -142,21 +151,25 @@ function _displayResumeInd(data) {
                 let textShortlist = document.createTextNode("\n Shortlist \n");
                 btnShortlist.classList.add('px-4');
                 btnShortlist.href = `javascript:resumeShortlist(${resumeID});`
-                btnViewDetails.appendChild(textShortlist);
+                btnShortlist.appendChild(textShortlist);
 
 
             }
 
-            txtEmail.appendChild(iconEmail);
-            txtMobile.appendChild(iconMobile);
-            divCardEmailNo.appendChild(txtEmail);
-            divCardEmailNo.appendChild(txtMobile);
+            //txtEmail.appendChild(iconEmail);
+            // txtMobile.appendChild(iconMobile);
+            divCardEmail.appendChild(iconEmail);
+            divCardEmail.appendChild(txtEmail);
+            divCardNo.appendChild(iconMobile);
+            divCardNo.appendChild(txtMobile);
 
-            resumeProfile.appendChild(divCardEmailNo);
+            resumeProfile.appendChild(divCardEmail); 
+            resumeProfile.appendChild(divCardNo);
             resumeProfile.appendChild(txtCandidate);
             resumeProfile.appendChild(btnShortlist)
 
             let progressMain = document.createElement('div');
+            progressMain.classList.add('progress');
             progressMain.setAttribute('style', 'height: 5%');
 
             var width = 'width: ' + `${item.compatiblePercentage}` + '%';
@@ -176,7 +189,7 @@ function _displayResumeInd(data) {
             let textGPA = document.createElement('p');
             textGPA.textContent = "CGPA: \n" + item.gpa;
             let textIns = document.createElement('p');
-            textIns.textContent = "Institute Match: \n" + item.instituteMatch;
+            textIns.textContent = "Institute Criteria Match: \n" + item.instituteMatch;
 
             divCGPAandIns.appendChild(textGPA)
             divCGPAandIns.appendChild(textIns)
@@ -193,22 +206,22 @@ function _displayResumeInd(data) {
 
 
                 let txtCompany = document.createElement('p');
-                txtCompany.textContent = "Company Name:\n" + item.companyName
+                txtCompany.innerHTML = "<b>Company Name:\n</b>" + item.companyName
 
                 let txtDesignation = document.createElement('p');
-                txtDesignation.textContent = "Designation:\n" + item.designation
+                txtDesignation.innerHTML = "<b>Designation:\n</b>" + item.designation
 
                 let txtResp = document.createElement('p');
-                txtResp.textContent = "Responsibility:\n" + item.responsiblility
+                txtResp.innerHTML = "<b>Responsibility:\n</b>" + item.responsiblility
 
                 let txtSDate = document.createElement('p');
-                txtSDate.textContent = "Start Date:\n" + item.startDate
+                txtSDate.innerHTML = "<b>Start Date:\n</b>" + item.startDate
 
                 let txtEdate = document.createElement('p');
-                txtEdate.textContent = "End Date:\n" + item.endDate
+                txtEdate.innerHTML = "<b>End Date:\n</b>" + item.endDate
 
                 let txtExp = document.createElement('p');
-                txtExp.textContent = "Experience:\n" + item.totalExperience + "\nMonths"
+                txtExp.innerHTML = "<b>Experience:\n</b>" + item.totalExperience + "\nMonths"
 
                 let txtHR = document.createElement('hr');
 
@@ -229,19 +242,19 @@ function _displayResumeInd(data) {
 
 
                 let txtInstitute = document.createElement('p');
-                txtInstitute.textContent = "Institute Name:\n" + item.instituteName
+                txtInstitute.innerHTML = "<b>Institute Name:\n</b>" + item.instituteName
 
                 let txtDegree = document.createElement('p');
-                txtDegree.textContent = "Degree:\n" + item.degreeName
+                txtDegree.innerHTML = "<b>Degree:\n</b>" + item.degreeName
 
                 let txtCgpa = document.createElement('p');
-                txtCgpa.textContent = "CGPA:\n" + item.cgpa
+                txtCgpa.innerHTML = "<b>CGPA:\n</b>" + item.cgpa
 
                 let txtSDate = document.createElement('p');
-                txtSDate.textContent = "Start Date:\n" + item.startDate
+                txtSDate.innerHTML = "<b>Start Date:\n</b>" + item.startDate
 
                 let txtEdate = document.createElement('p');
-                txtEdate.textContent = "End Date:\n" + item.endDate
+                txtEdate.innerHTML = "<b>End Date:\n</b>" + item.endDate
 
 
                 let txtHR = document.createElement('hr');
@@ -259,25 +272,26 @@ function _displayResumeInd(data) {
             //Skills
             parsedataSkills.forEach(item => {
 
-                let txtSkillName = document.createElement('p');
-                txtSkillName.textContent = "Skill Name:\n" + item.skillName
-                let txtHR = document.createElement('hr');
+                let txtSkillName = document.createElement('span');
+                txtSkillName.classList.add('skilltags');
+                txtSkillName.textContent = item.skillName;
+              //  let txtHR = document.createElement('hr');
                 resumeSkills.appendChild(txtSkillName);
-                resumeSkills.appendChild(txtHR);
+              //  resumeSkills.appendChild(txtHR);
 
 
             });
 
             //Links
             parsedataLinks.forEach(item => {
-
-                let txtLinkName = document.createElement('a');
-                txtLinkName.textContent = "LinkedIn"; 
-                txtLinkName.href = item.link;
-                txtLinkName.target = "_blank";
                 let txtHR = document.createElement('hr');
-                resumeLinks.appendChild(txtLinkName);
+                let txtLinkName = document.createElement('a');
+                txtLinkName.textContent = 'https://www.' + item.link; 
+                txtLinkName.href = 'https://www.' + item.link;
+                txtLinkName.target = "_blank";
                 resumeLinks.appendChild(txtHR);
+                resumeLinks.appendChild(txtLinkName);
+            
 
 
             });

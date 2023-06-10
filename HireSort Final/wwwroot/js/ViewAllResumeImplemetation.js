@@ -133,7 +133,7 @@ function _displayResumeList(data) {
             divCardRow.classList.add('row', 'g-4');
 
             let divCol = document.createElement('div');
-            divCol.classList.add('col-sm-12', 'col-md-8', 'd-flex', 'align-items-center');
+            divCol.classList.add('col-sm-12', 'col-md-6', 'd-flex', 'align-items-center');
 
             let icon = document.createElement('i');
             icon.classList.add('fa', 'fa-3x', 'fa-user', 'text-primary', 'mb-4');
@@ -162,10 +162,10 @@ function _displayResumeList(data) {
             iconMobile.classList.add('fa', 'fa-mobile', 'text-primary', 'me-2');
 
             let divColBtn = document.createElement('div');
-            divColBtn.classList.add('col-sm-12','col-md-4', 'd-flex', 'flex-column', 'align-items-start', 'align-items-md-end', 'justify-content-center');
+            divColBtn.classList.add('col-sm-12','col-md-6', 'd-flex', 'flex-column', 'align-items-start', 'align-items-md-end', 'justify-content-center');
 
             let divBtnFlx = document.createElement('div');
-            divBtnFlx.classList.add('mb-3','d-flex');
+            divBtnFlx.classList.add('mb-3','d-flex','justify-content-end');
             divBtnFlx.setAttribute('style', 'width: 100%');
 
             //divBtnFlx.classList.add('d-flex', 'mb-3');
@@ -185,10 +185,13 @@ function _displayResumeList(data) {
             btnCheckCompInd.href = `/Admin/CheckCompatibiltyIndividual/CheckCompatibiltyIndividual?jobId=${vacID}&resumeId=${resumeId}&departId=${deptID}`
           
             btnCheckCompInd.appendChild(textCheckComp);
-            
+
+
+            let btnViewCompCheck = document.createElement('a');
+            btnViewCompCheck.classList.add('btn', 'btn-primary','ms-3');
 
             let progressMain = document.createElement('div');
-            progressMain.classList.add('col-lg-8','mt-2');
+            progressMain.classList.add('col-lg-6','mt-2','progress');
             progressMain.setAttribute('style', 'height: 50%');
 
             let progressBar = document.createElement('div');
@@ -203,18 +206,26 @@ function _displayResumeList(data) {
 
             if (item.isCompatibilityCheck == true) {
                 progressMain.classList.add('d-block');
-                btnCheckCompInd.classList.add('btn', 'btn-primary', 'd-none','col-lg-8');
+                btnCheckCompInd.classList.add('btn', 'btn-primary', 'd-none','col-lg-5');
                 var width = 'width:' + `${item.compatibility}` + '%';
                 progressBar.setAttribute('style', width);
                 progressBar.textContent = item.compatibility + '%';
-               
+
+                
+                let textCompCheck = document.createTextNode("View Detail");
+                btnViewCompCheck.href = `/Admin/CheckCompatibiltyIndividual/CheckCompatibiltyIndividual?jobId=${vacID}&resumeId=${resumeId}&departId=${deptID}`
+                btnViewCompCheck.appendChild(textCompCheck);
                 
             }
 
             else {
                 progressMain.classList.add('d-none');
-                btnCheckCompInd.classList.add('btn', 'btn-primary', 'd-block', 'col-lg-8');
+                btnCheckCompInd.classList.add('btn', 'btn-primary', 'd-block', 'col-lg-5');
                 btnViewDetails.classList.add('d-none');
+
+                btnViewCompCheck.classList.add('d-none');
+
+
             }
 
 
@@ -265,9 +276,12 @@ function _displayResumeList(data) {
 
           
             divBtnFlx.appendChild(btnCheckCompInd);
+           
             divBtnFlx.appendChild(progressMain);
+
             divColBtn.appendChild(divBtnFlx);
             divBtnFlx.appendChild(btnViewDetails);
+            divBtnFlx.appendChild(btnViewCompCheck);
             divCardRow.appendChild(divCol);
 
             divCardRow.appendChild(divColBtn)

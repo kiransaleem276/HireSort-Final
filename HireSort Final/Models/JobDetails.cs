@@ -10,6 +10,7 @@
         public string? JobShift { get; set; }
         public string? Experience { get; set; }
         public List<JobDescription>? JobDesc { get; set; }
+        public List<JobDescription>? JobSkills { get; set; }
     }
     public class JobDescription
     {

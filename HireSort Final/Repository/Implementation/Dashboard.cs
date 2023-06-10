@@ -183,12 +183,16 @@ namespace HireSort.Repository.Implementation
                     JobType = s.JobDetails.FirstOrDefault(b => b.JobCode.CodeName == "Job Type").Description ?? null,
                     Experience = s.ExperienceFrom + " - " + s.ExperienceTo + " years of experience",
                     //JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName != "Job Shift" && w.JobCode.CodeName != "Job Type" && w.JobCode.CodeName != "Experience").Select(s => new JobDescription
-                    JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName == "Additional Description" || w.JobCode.CodeName == "Skills" || w.JobCode.CodeName == "Requirements" || w.JobCode.CodeName == "Responsibility" || w.JobCode.CodeName == "Salary Package").Select(s => new JobDescription
+                    JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName == "Additional Description" || w.JobCode.CodeName == "Requirements" || w.JobCode.CodeName == "Responsibility" || w.JobCode.CodeName == "Salary Package").Select(s => new JobDescription
                     {
                         JobDetailId = s.Id,
                         JobCode = s.JobCode.CodeName,
                         Description = s.Description,
-                    }).ToList()
+                    }).ToList(),
+                    JobSkills = s.JobDetails.Where(w => w.JobCode.CodeName == "Skills").Select(s => new JobDescription
+                    {
+                        Description = s.Description,
+                    }).ToList(),
                 });
                 return CommonHelper.GetApiSuccessResponse(response);
             }
