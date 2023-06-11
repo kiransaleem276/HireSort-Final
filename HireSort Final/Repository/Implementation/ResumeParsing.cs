@@ -169,9 +169,9 @@ namespace HireSort.Repository.Implementation
                                     eduMatch = true;
                                 }
                             }
-                            if (percentage > 50)
+                            if (percentage > parsingPercentage?.Percentage)
                             {
-                                double remainingPer = (percentage - 50) / 3;
+                                double remainingPer = (percentage - parsingPercentage?.Percentage ?? 0) / 3;
                                 eduPer += remainingPer;
                                 expPer += remainingPer;
                                 skillPer += remainingPer;
@@ -203,9 +203,9 @@ namespace HireSort.Repository.Implementation
                             {
                                 //if(job.StartDate!=null || job.EndDate != null)
                                 //years  
-                                int Years = job.EndDate.Date.Year - job.StartDate.Date.Year;
-                                int month = job.EndDate.Date.Month - job.StartDate.Date.Month;
-                                int TotalMonths = (Years * 12) + month;
+                                int? Years = job.EndDate?.Date.Year - job.StartDate?.Date.Year;
+                                int? month = job.EndDate?.Date.Month - job.StartDate?.Date.Month;
+                                int? TotalMonths = (Years * 12) + month;
 
                                 workHistory.Add(new Experience()
                                 {
@@ -213,7 +213,7 @@ namespace HireSort.Repository.Implementation
                                     CompanyName = job.Employer?.Name?.Normalized ?? "",
                                     Responsibility = job.Description,
                                     Designation = job.JobTitle?.Normalized ?? "",
-                                    TotalExperience = TotalMonths,
+                                    TotalExperience = TotalMonths ?? 0,
                                     StartDate = job.StartDate.Date,
                                     EndDate = job.EndDate.Date,
                                     CreatedOn = DateTime.Now
@@ -263,7 +263,8 @@ namespace HireSort.Repository.Implementation
                                     }
                                     else
                                     {
-                                        Compatibility += (skillMatchCount / jobSkills.Count) * skillPer;
+                                        Compatibility += Convert.ToDouble(skillMatchCount) / Convert.ToDouble(jobSkills.Count) * skillPer;
+                                        //Compatibility += (skillMatchCount / jobSkills.Count) * skillPer;
                                     }
                                 }
                             }

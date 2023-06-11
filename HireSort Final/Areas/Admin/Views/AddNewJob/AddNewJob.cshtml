@@ -26,11 +26,11 @@
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Job Title" name="JobTitle">
+                                <input class="form-control bg-white" placeholder="Job Title" name="JobTitle" id="tb_jobTitle">
                             </div>
 
                             <div class="col-12 col-sm-6">
-                                <select type="text" class="form-select" name="JobType">
+                                <select type="text" class="form-select" name="JobType" id="tb_jobType">
                                     <option selected>Job Type</option>
                                     <option>Contract</option>
                                     <option>Full-time</option>
@@ -38,17 +38,17 @@
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Salary" name="Salary">
+                                <input class="form-control bg-white" placeholder="Salary" name="Salary" >
                             </div>
 
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Start Date : " type="date" name="StartDate" />
+                                <input id="sDate" class="form-control bg-white" placeholder="Start Date : " type="date" name="StartDate" />
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="End Date : " type="date" name="EndDate">
+                                <input id="eDate" class="form-control bg-white" placeholder="End Date : " type="date" name="EndDate">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input class="form-control bg-white" placeholder="Qualification" name="Educations">
+                                <input class="form-control bg-white" placeholder="Qualification" name="Educations" id="tb_Edu">
                             </div>
 
 
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <select type="text" class="form-select" name="JobShift">
+                                <select type="text" class="form-select" name="JobShift" id="tb_jobShift">
                                     <option selected>Job Shift</option>
                                     <option>Day</option>
                                     <option>Afternoon</option>
@@ -78,9 +78,9 @@
                             <div class="col-12 col-sm-6">
                                 <!--  <input class="form-control bg-white" placeholder="Experience">-->
                                 <div class="input-group mb-3">
-                                    <input class="form-control bg-white" placeholder="Experience from" name="ExperienceFrom" type="number">
+                                    <input class="form-control bg-white" placeholder="Experience from" name="ExperienceFrom" type="number" id="tb_ExpFrom">
                                     <span class="input-group-text"><i class="far fa-calendar-alt text-primary"></i></span>
-                                    <input class="form-control" placeholder="Experience to" name="ExperienceTo" type="number">
+                                    <input class="form-control" placeholder="Experience to" name="ExperienceTo" type="number"  id="tb_ExpTo">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -117,6 +117,29 @@
 
                 <div class="mb-3">
                     <h4 for="recipient-name" class="col-form-label">Job has been posted.</h4>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="validateformAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <h4 for="recipient-name" class="col-form-label">Please fill the form correctly.</h4>
                 </div>
 
             </div>

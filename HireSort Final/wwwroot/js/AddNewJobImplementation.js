@@ -22,6 +22,25 @@ $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
     $('#spinner').removeClass('show');
+    //Start Date Validation
+    document.getElementById('sDate').valueAsDate = new Date();
+
+    //End Date Validation
+    $(function () {
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+
+        var maxDate = year + '-' + month + '-' + day;
+        $('#eDate').attr('min', maxDate);
+        $('#sDate').attr('min', maxDate);
+    });
 });
 
 // Get Department Dropdown
@@ -70,6 +89,28 @@ document.getElementById("btn_addSkills").onclick = function () {
 }
 
 function handleFormSubmit(event) {
+    var tbDept = document.getElementById("department").value;
+    var tbTitle = document.getElementById("tb_jobTitle").value;
+    var tbType = document.getElementById("tb_jobType").value;
+    //var tbSalary = document.getElementById("tb_Salary").value;
+    var tbsDate = document.getElementById("sDate").value;
+    var tbeDate = document.getElementById("eDate").value;
+    var tbEdu = document.getElementById("tb_Edu").value;
+    var tbSkills = document.getElementById("cb_skills").value;
+    var tbShift = document.getElementById("tb_jobShift").value;
+    var tbExpFrom = document.getElementById("tb_ExpFrom").value;
+    var tbExpTo = document.getElementById("tb_ExpTo").value;
+    //var tbReq = document.getElementById("tb_Req").value;
+    //var tbResp = document.getElementById("tb_Resp").value;
+    //var tbDesc = document.getElementById("tb_Desc").value;
+
+
+
+    if (tbDept == "" || tbTitle == "" || tbType == ""  || tbsDate == "" || tbeDate == "" || tbEdu == "" || tbSkills == "" || tbShift == "" || tbExpFrom == "" || tbExpTo == "" ) {
+        //alert("Please fill the form correctly.");
+        $('#validateformAdd').modal('toggle');
+
+    }
     event.preventDefault();
     $('#spinner').addClass('show');
 
@@ -96,6 +137,7 @@ $.ajax(
             $('#jobposted').modal('toggle');
 
             document.getElementById("frmAddNewJob").reset();
+            document.getElementById("list_skills").style.display = "none";
         },
         error: function (data) {
             $('#spinner').removeClass('show');

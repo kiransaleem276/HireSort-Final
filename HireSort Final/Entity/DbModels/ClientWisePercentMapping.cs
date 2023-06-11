@@ -12,6 +12,7 @@ namespace HireSort.Entity.DbModels
         public double SkillsPercentage { get; set; }
         public double ExperiencePercentage { get; set; }
         public double EducationPercentage { get; set; }
+        public double? Percentage { get; set; }
 
         public virtual Client Client { get; set; } = null!;
     }

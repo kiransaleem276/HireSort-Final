@@ -108,7 +108,7 @@ function _displayResumeInd(data) {
     const resumeExp = document.getElementById('experience');
     const resumeEdu = document.getElementById('education');
     const resumeSkills = document.getElementById('skills');
-    const resumeLinks = document.getElementById('links');
+   // const resumeLinks = document.getElementById('links');
 
   
     var status = data.statusCode
@@ -292,19 +292,19 @@ function _displayResumeInd(data) {
 
             });
 
-            //Links
-            parsedataLinks.forEach(item => {
-                let txtHR = document.createElement('hr');
-                let txtLinkName = document.createElement('a');
-                txtLinkName.textContent = 'https://www.' + item.link; 
-                txtLinkName.href = 'https://www.' + item.link;
-                txtLinkName.target = "_blank";
-                resumeLinks.appendChild(txtHR);
-                resumeLinks.appendChild(txtLinkName);
+            ////Links
+            //parsedataLinks.forEach(item => {
+            //    let txtHR = document.createElement('hr');
+            //    let txtLinkName = document.createElement('a');
+            //    txtLinkName.textContent = 'https://www.' + item.link; 
+            //    txtLinkName.href = 'https://www.' + item.link;
+            //    txtLinkName.target = "_blank";
+            //    resumeLinks.appendChild(txtHR);
+            //    resumeLinks.appendChild(txtLinkName);
             
 
 
-            });
+            //});
 
         });
 

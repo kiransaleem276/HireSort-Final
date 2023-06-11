@@ -150,6 +150,8 @@ namespace HireSort.Context
 
                 entity.Property(e => e.InstitutePercentage).HasColumnName("INSTITUTE_PERCENTAGE");
 
+                entity.Property(e => e.Percentage).HasColumnName("PERCENTAGE");
+
                 entity.Property(e => e.SkillsPercentage).HasColumnName("SKILLS_PERCENTAGE");
 
                 entity.HasOne(d => d.Client)

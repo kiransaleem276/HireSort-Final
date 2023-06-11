@@ -6,10 +6,6 @@
 //document.getElementsByTagName('head')[0].appendChild(script);
 
 
-$(document).ready(function () {
-    $('#spinner').addClass('show');
-    $('#spinner').removeClass('show');
-});
 // Get Login
 function getLogin() {
 
