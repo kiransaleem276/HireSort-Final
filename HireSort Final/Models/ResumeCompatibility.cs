@@ -9,6 +9,7 @@
         public string? CompatiblePercentage { get; set; }
         public string? GPA { get; set; }
         public string? InstituteMatch { get; set; }
+        public bool? IsShortlisted { get; set; }
         public List<CandidateEducation>? Educations { get; set; }
         public List<CandidateExperience>? Experience { get; set; }
         public List<Skills>? Skills { get; set; }

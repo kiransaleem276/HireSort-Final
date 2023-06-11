@@ -18,7 +18,8 @@ const ddl_Vac = $('#vacancy');
 
 
 $(document).ready(function () {
-  
+    $('#spinner').addClass('show');
+
     if (window.location.search == "Admin") {
         document.getElementById("btnAddNew").style.display = "inline-block";
         //document.getElementById("btnHome").style.display = "inline-block";
@@ -31,7 +32,8 @@ $(document).ready(function () {
        getItemsVacancyList();
     //getItemsVacancyCount();
 
-  
+    $('#spinner').removeClass('show');
+
       
 
    

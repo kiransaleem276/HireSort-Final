@@ -15,12 +15,13 @@ const ddl_Dept = document.getElementById('department');
 
 
 $(document).ready(function () {
-
+    $('#spinner').addClass('show');
     getItemsDept();
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+    $('#spinner').removeClass('show');
 });
 
 // Get Department Dropdown
@@ -70,6 +71,7 @@ document.getElementById("btn_addSkills").onclick = function () {
 
 function handleFormSubmit(event) {
     event.preventDefault();
+    $('#spinner').addClass('show');
 
     const getFormData = new FormData(event.target);
 
@@ -82,7 +84,6 @@ function handleFormSubmit(event) {
 
 $.ajax(
     {
-
         url: `/api/dashboard/add-job`,
         data: JSON.stringify(formJSON) ,
         contentType: "application/json; charset=utf-8",
@@ -90,16 +91,21 @@ $.ajax(
         dataType: 'json',
         tradditional: true,
         success: function (data) {
+            $('#spinner').removeClass('show');
+
             $('#jobposted').modal('toggle');
 
             document.getElementById("frmAddNewJob").reset();
         },
         error: function (data) {
+            $('#spinner').removeClass('show');
+
            // $('#jobposted').modal('toggle');
             console.log(data);
         }
     }
-);
+    );
+
 }
 
 const form = document.querySelector('.addjob-form');

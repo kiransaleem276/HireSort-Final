@@ -48,7 +48,7 @@ namespace HireSort.Repository.Implementation
                 {
                     VacancyId = s.JobId,
                     VacancyName = s.JobName
-                }).ToListAsync();
+                }).OrderByDescending(o => o.VacancyId).ToListAsync();
                 return CommonHelper.GetApiSuccessResponse(vacancies);
             }
             catch (Exception ex)
@@ -81,6 +81,8 @@ namespace HireSort.Repository.Implementation
                 {
                     list = list.Where(w => w.VacancyId == vacancyId);
                 }
+
+                list = list.OrderByDescending(o => o.VacancyId);
                 return CommonHelper.GetApiSuccessResponse(list);
             }
             catch (Exception ex)
@@ -158,7 +160,7 @@ namespace HireSort.Repository.Implementation
                     JobName = s.JobName,
                     JobStartDate = s.StartDate.ToString(_dateFormat),
                     JobEndDate = (s.EndDate != null) ? Convert.ToDateTime(s.EndDate).ToString(_dateFormat) : "Not Available"
-                });
+                }).OrderByDescending(o => o.JobId);
                 return CommonHelper.GetApiSuccessResponse(response);
 
             }
@@ -183,7 +185,7 @@ namespace HireSort.Repository.Implementation
                     JobType = s.JobDetails.FirstOrDefault(b => b.JobCode.CodeName == "Job Type").Description ?? null,
                     Experience = s.ExperienceFrom + " - " + s.ExperienceTo + " years of experience",
                     //JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName != "Job Shift" && w.JobCode.CodeName != "Job Type" && w.JobCode.CodeName != "Experience").Select(s => new JobDescription
-                    JobDesc = s.JobDetails.Where(w => w.JobCode.CodeName == "Additional Description" || w.JobCode.CodeName == "Requirements" || w.JobCode.CodeName == "Responsibility" || w.JobCode.CodeName == "Salary Package").Select(s => new JobDescription
+                    JobDesc = s.JobDetails.Where(w => (w.JobCode.CodeName == "Requirements" || w.JobCode.CodeName == "Responsibility" || w.JobCode.CodeName == "Salary Package" || w.JobCode.CodeName == "Additional Description") && !String.IsNullOrWhiteSpace(w.Description)).Select(s => new JobDescription
                     {
                         JobDetailId = s.Id,
                         JobCode = s.JobCode.CodeName,
@@ -210,12 +212,13 @@ namespace HireSort.Repository.Implementation
                 var response = _dbContext.Resumes.Where(w => w.ClientId == clientId && w.JobId == jobId && w.Id == resumeId && w.IsCompatibility == true).Select(s => new ResumeCompatibility()
                 {
                     ResumeId = s.Id,
-                    CandidateName = s.FileName + " " + s.LastName,
+                    CandidateName = s.FirstName + " " + s.LastName,
                     MobieNo = s.MobileNo,
                     Email = s.Email,
                     CompatiblePercentage = s.Compatibility,
                     GPA = !String.IsNullOrEmpty(s.Gpa) ? s.Gpa : "Not Available",
                     InstituteMatch = s.InstituteMatch,
+                    IsShortlisted = s.IsShortlisted,
                     Educations = s.Educations.Where(w => w.ResumeId == s.Id).Select(a => new CandidateEducation()
                     {
                         EduId = a.Id,
@@ -339,30 +342,7 @@ namespace HireSort.Repository.Implementation
                     _dbContext.JobDetails.Add(jobDetail);
                     _dbContext.SaveChanges();
                 }
-                if (jobDetails.AdditionalDesc != null)
-                {
-                    JobDetail jobDetail = new JobDetail();
-                    jobDetail.JobId = job.JobId;
-                    jobDetail.JobCodeId = 8;
-                    jobDetail.Description = jobDetails.AdditionalDesc;
-                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
-                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
-                    jobDetail.CreatedOn = DateTime.Now;
-                    _dbContext.JobDetails.Add(jobDetail);
-                    _dbContext.SaveChanges();
-                }
-                if (jobDetails.Salary != null)
-                {
-                    JobDetail jobDetail = new JobDetail();
-                    jobDetail.JobId = job.JobId;
-                    jobDetail.JobCodeId = 6;
-                    jobDetail.Description = jobDetails.Salary;
-                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
-                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
-                    jobDetail.CreatedOn = DateTime.Now;
-                    _dbContext.JobDetails.Add(jobDetail);
-                    _dbContext.SaveChanges();
-                }
+
                 if (jobDetails.JobType != null)
                 {
                     JobDetail jobDetail = new JobDetail();
@@ -375,24 +355,7 @@ namespace HireSort.Repository.Implementation
                     _dbContext.JobDetails.Add(jobDetail);
                     _dbContext.SaveChanges();
                 }
-                if (jobDetails.Skills != null && jobDetails.Skills.Count > 0)
-                {
-                    List<JobDetail> jobDetail = new List<JobDetail>();
-                    foreach (var skil in jobDetails.Skills)
-                    {
-                        jobDetail.Add(new JobDetail()
-                        {
-                            JobId = job.JobId,
-                            JobCodeId = 3,
-                            Description = skil,
-                            ClientId = jobDetails.ClientId ?? 0,
-                            CreatedBy = jobDetails.ClientId.ToString(),
-                            CreatedOn = DateTime.Now,
-                        });
-                    }
-                    _dbContext.JobDetails.AddRange(jobDetail);
-                    _dbContext.SaveChanges();
-                }
+               
                 if (jobDetails.Educations != null)
                 {
                     List<JobDetail> jobDetail = new List<JobDetail>();
@@ -444,6 +407,48 @@ namespace HireSort.Repository.Implementation
                     jobDetail.JobId = job.JobId;
                     jobDetail.JobCodeId = 9;
                     jobDetail.Description = jobDetails.Requirement;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Skills != null && jobDetails.Skills.Count > 0)
+                {
+                    List<JobDetail> jobDetail = new List<JobDetail>();
+                    foreach (var skil in jobDetails.Skills)
+                    {
+                        jobDetail.Add(new JobDetail()
+                        {
+                            JobId = job.JobId,
+                            JobCodeId = 3,
+                            Description = skil,
+                            ClientId = jobDetails.ClientId ?? 0,
+                            CreatedBy = jobDetails.ClientId.ToString(),
+                            CreatedOn = DateTime.Now,
+                        });
+                    }
+                    _dbContext.JobDetails.AddRange(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.Salary != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 6;
+                    jobDetail.Description = jobDetails.Salary;
+                    jobDetail.ClientId = jobDetails.ClientId ?? 0;
+                    jobDetail.CreatedBy = jobDetails.ClientId.ToString();
+                    jobDetail.CreatedOn = DateTime.Now;
+                    _dbContext.JobDetails.Add(jobDetail);
+                    _dbContext.SaveChanges();
+                }
+                if (jobDetails.AdditionalDesc != null)
+                {
+                    JobDetail jobDetail = new JobDetail();
+                    jobDetail.JobId = job.JobId;
+                    jobDetail.JobCodeId = 8;
+                    jobDetail.Description = jobDetails.AdditionalDesc;
                     jobDetail.ClientId = jobDetails.ClientId ?? 0;
                     jobDetail.CreatedBy = jobDetails.ClientId.ToString();
                     jobDetail.CreatedOn = DateTime.Now;

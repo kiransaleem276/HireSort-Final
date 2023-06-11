@@ -7,12 +7,14 @@ $(document).ready(function () {
     //const searchParams = queryString.searchParams;
     //var deptID = searchParams.get('departId');
     //var vacID = searchParams.get('vacancyId');
+    $('#spinner').addClass('show');
 
     const params = new URLSearchParams(window.location.search);
     deptID = params.get('departId');
 
 
     getVacancyList();
+    $('#spinner').removeClass('show');
 
 });
 

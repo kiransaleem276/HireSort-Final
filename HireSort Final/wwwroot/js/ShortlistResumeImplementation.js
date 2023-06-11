@@ -3,17 +3,15 @@
 var deptID;
 var vacID;
 $(document).ready(function () {
-    //var queryString = window.location.href;
-    ////window.location.href.slice(window.location.href.indexOf('?') + 1);
-    //const searchParams = queryString.searchParams;
-    //var deptID = searchParams.get('departId');
-    //var vacID = searchParams.get('vacancyId');
-  
+    
+    $('#spinner').addClass('show');
+
     const params = new URLSearchParams(window.location.search);
     deptID = params.get('departId');
     vacID = params.get('vacancyId');
 
     getResumeList();
+    $('#spinner').removeClass('show');
 
 
 });

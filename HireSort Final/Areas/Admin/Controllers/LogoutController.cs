@@ -15,6 +15,7 @@ namespace HireSort.Areas.Admin.Controllers
 
         public IActionResult Logout()
         {
+            HttpContext.Session.Clear();
             return View();
         }
 

@@ -11,7 +11,7 @@ $(document).ready(function () {
     //const searchParams = queryString.searchParams;
     //var deptID = searchParams.get('departId');
     //var vacID = searchParams.get('vacancyId');
-
+    $('#spinner').addClass('show');
     const params = new URLSearchParams(window.location.search);
     deptID = params.get('departId');
     vacID = params.get('vacancyId');
@@ -28,6 +28,8 @@ $(document).ready(function () {
     }
 
     getJobDetails();
+    $('#spinner').removeClass('show');
+
     //resumeShortlist();
 });
 
@@ -35,6 +37,7 @@ $(document).ready(function () {
 
 //Apply Now Functionality
 function applyNow(fname, lname, email, files, coverLetter) {
+    $('#spinner').addClass('show');
     var firstname = document.getElementById(fname).value;
     var lastname = document.getElementById(lname).value;
     var emailAdd = document.getElementById(email).value;
@@ -59,6 +62,8 @@ function applyNow(fname, lname, email, files, coverLetter) {
             contentType: false,
             type: "POST",
             success: function (data) {
+                $('#spinner').removeClass('show');
+
                 //location.reload();
                 //getResumeList();
                // alert("Files Uploaded!");
@@ -67,6 +72,7 @@ function applyNow(fname, lname, email, files, coverLetter) {
                 document.getElementById("frmApply").reset();
             },
             error: function (data) {
+                $('#spinner').removeClass('show');
                 // location.reload();
                 //getResumeList();
                 console.log(data);

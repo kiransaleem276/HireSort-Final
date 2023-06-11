@@ -9,12 +9,15 @@ $(document).ready(function () {
     //const searchParams = queryString.searchParams;
     //var deptID = searchParams.get('departId');
     //var vacID = searchParams.get('vacancyId');
-  
+    $('#spinner').addClass('show');
+
     const params = new URLSearchParams(window.location.search);
     deptID = params.get('departId');
     vacID = params.get('vacancyId');
 
     getResumeList();
+    $('#spinner').removeClass('show');
+
     //resumeShortlist();
 });
 
@@ -27,6 +30,8 @@ $('#files').on('change', function () {
 
 
 function uploadFiles(inputId) {
+    $('#spinner').addClass('show');
+
     var input = document.getElementById(inputId);
     var files = input.files;
 
@@ -43,6 +48,8 @@ function uploadFiles(inputId) {
             type: "POST",
             success: function (data) {
                 location.reload();
+                $('#spinner').removeClass('show');
+
                 //getResumeList();
                 //alert("Files Uploaded!");
             }
@@ -88,6 +95,7 @@ function getResumeList() {
 }
 
 function resumeShortlist(resumeId) {
+    $('#spinner').addClass('show');
 
     //const uriCheckCompatibilty = `/api/dashboard/check-resume-compatibility?jobId=${jobID}&resumeId=${resumeID}`
     //fetch(uriCheckCompatibilty)
@@ -106,6 +114,8 @@ function resumeShortlist(resumeId) {
             success: function () {
                 getResumeList();
                 location.reload();
+                $('#spinner').removeClass('show');
+
             }
 
 

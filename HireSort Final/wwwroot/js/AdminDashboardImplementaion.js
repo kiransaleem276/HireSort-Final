@@ -19,10 +19,12 @@ const ddl_Vac = $('#vacancy');
 
 $(document).ready(function () {
 
+    $('#spinner').addClass('show');
 
     getItemsDept();
     getItemsVacancyList();
     getItemsVacancyCount();
+    $('#spinner').removeClass('show');
 
 
 });

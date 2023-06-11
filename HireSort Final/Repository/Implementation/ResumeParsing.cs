@@ -164,7 +164,7 @@ namespace HireSort.Repository.Implementation
                                 }
 
                                 var education = vacancy.JobDetails.FirstOrDefault(w => w.JobCodeId == 4).Description;
-                                if ((edu.Degree?.Name?.Normalized.ToLower().Trim().Equals(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.Text?.ToLower().Trim().Contains(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
+                                if ((edu.Degree?.Name?.Raw.ToLower().Trim().Equals(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.Text?.ToLower().Trim().Contains(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
                                 {
                                     eduMatch = true;
                                 }
@@ -175,6 +175,10 @@ namespace HireSort.Repository.Implementation
                                 eduPer += remainingPer;
                                 expPer += remainingPer;
                                 skillPer += remainingPer;
+                                skillPer = Math.Round(skillPer, 2);
+                                expPer = Math.Round(expPer, 2);
+                                eduPer = Math.Round(eduPer, 2);
+
                             }
                             if (String.IsNullOrEmpty(resume.InstituteMatch))
                             {
@@ -186,6 +190,7 @@ namespace HireSort.Repository.Implementation
                                 Compatibility += eduPer;
                                 percentage -= eduPer;
                             }
+                            Compatibility = Math.Round(Compatibility, 2);
 
                             _dbContext.Educations.AddRange(educations);
                             _dbContext.SaveChanges();
@@ -223,6 +228,7 @@ namespace HireSort.Repository.Implementation
                             {
                                 Compatibility += (totalExp / minExp ?? 0) * expPer;
                             }
+                            Compatibility = Math.Round(Compatibility, 2);
                             _dbContext.Experiences.AddRange(workHistory);
                             _dbContext.SaveChanges();
                         }
@@ -242,9 +248,9 @@ namespace HireSort.Repository.Implementation
                             if (jobSkills.Count > 0)
                             {
                                 int skillMatchCount = 0;
-                                foreach (var skill in jobSkills)
+                                foreach (var skil in jobSkills)
                                 {
-                                    if (technicalSkills.Any(a => a.Skills.Contains(skill.Description, StringComparison.CurrentCultureIgnoreCase)))
+                                    if (technicalSkills.Any(a => a.Skills.Contains(skil.Description, StringComparison.CurrentCultureIgnoreCase)))
                                     {
                                         skillMatchCount++;
                                     }
@@ -262,6 +268,7 @@ namespace HireSort.Repository.Implementation
                                 }
                             }
                         }
+                        Compatibility = Math.Round(Compatibility, 2);
 
                         if (parseResponse.Value.ResumeData.ContactInformation.WebAddresses != null && parseResponse.Value.ResumeData.ContactInformation.WebAddresses.Count > 0)
                         {

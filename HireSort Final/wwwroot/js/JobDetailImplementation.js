@@ -11,6 +11,7 @@ $(document).ready(function () {
     //const searchParams = queryString.searchParams;
     //var deptID = searchParams.get('departId');
     //var vacID = searchParams.get('vacancyId');
+    $('#spinner').addClass('show');
 
     const params = new URLSearchParams(window.location.search);
     deptID = params.get('departId');
@@ -28,6 +29,8 @@ $(document).ready(function () {
   //  }
 
     getJobDetails();
+    $('#spinner').removeClass('show');
+
     //resumeShortlist();
 });
 
@@ -51,7 +54,7 @@ function _displayJobDetails(data) {
     const jobdetailist = document.getElementById('jobDesc');
     const jobTenureList = document.getElementById('jobSummary');
     const jobResponsibility = document.getElementById('jobResponsibility');
-    const jobQualification = document.getElementById('jobQualification');
+    const jobSkills = document.getElementById('jobSkills');
 
 
     var status = data.statusCode
@@ -73,7 +76,7 @@ function _displayJobDetails(data) {
             iconArr1.classList.add('fa', 'fa-angle-right', 'text-primary', 'me-2');
 
             startDate.appendChild(iconArr1);
-            startDate.textContent = "Start Date:\n" + item.jobStartDate;
+            startDate.innerHTML = "<b>Start Date:\n</b>" + item.jobStartDate;
             jobTenureList.appendChild(startDate);
 
             //END Date
@@ -82,7 +85,7 @@ function _displayJobDetails(data) {
             iconArr2.classList.add('fa', 'fa-angle-right', 'text-primary', 'me-2');
 
             endDate.appendChild(iconArr2);
-            endDate.textContent = "End Date:\n" + item.jobEndDate;
+            endDate.innerHTML = "<b>End Date:\n</b>" + item.jobEndDate;
             jobTenureList.appendChild(endDate);
 
 
@@ -92,7 +95,7 @@ function _displayJobDetails(data) {
             iconArr3.classList.add('fa', 'fa-angle-right', 'text-primary', 'me-2');
 
             jobType.appendChild(iconArr3);
-            jobType.textContent = "Job Type:\n" + item.jobType;
+            jobType.innerHTML = "<b>Job Type:\n</b>" + item.jobType;
             jobTenureList.appendChild(jobType);
 
 
@@ -102,7 +105,7 @@ function _displayJobDetails(data) {
             iconArr4.classList.add('fa', 'fa-angle-right', 'text-primary', 'me-2');
 
             jobShift.appendChild(iconArr4);
-            jobShift.textContent = "Job Shift:\n" + item.jobShift;
+            jobShift.innerHTML = "<b>Job Shift:\n</b>" + item.jobShift;
             jobTenureList.appendChild(jobShift);
 
             //Job Description in Detail
@@ -119,6 +122,16 @@ function _displayJobDetails(data) {
                 let reponsibilityDetail = document.createElement('p');
                 reponsibilityDetail.textContent = item.description;
                 jobResponsibility.appendChild(reponsibilityDetail);
+            });
+
+            //Job Skills in Detail
+
+            var parseJobSkills = item.jobSkills
+            parseJobSkills.forEach(item => {
+                let skills = document.createElement('span');
+                skills.classList.add('skilltags');
+                skills.textContent = item.description;
+                jobSkills.appendChild(skills);
             });
         });
     }
