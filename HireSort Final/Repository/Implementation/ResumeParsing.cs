@@ -127,46 +127,49 @@ namespace HireSort.Repository.Implementation
                             bool eduMatch = false;
                             foreach (var edu in parseResponse.Value.ResumeData.Education.EducationDetails)
                             {
-                                educations.Add(new Education()
+                                if (edu != null)
                                 {
-                                    ResumeId = resumeId,
-                                    InstituteName = edu.SchoolName?.Normalized ?? "",
-                                    DegreeName = edu.Degree?.Name?.Normalized ?? "",
-                                    Cgpa = edu.GPA?.Score.ToString() ?? "",
-                                    DegreeType = edu.Degree?.Type ?? "",
-                                    StartDate = (edu.LastEducationDate != null) ? edu.LastEducationDate.Date : null,
-                                    EndDate = (edu.LastEducationDate != null) ? edu.LastEducationDate.Date : null,
-                                    CreatedOn = DateTime.Now
-                                });
-
-                                //GPA match
-                                if (gpa != null && edu.Degree?.Type == "bachelors" && !String.IsNullOrEmpty(edu.GPA?.Score.ToString()))
-                                {
-                                    if (Convert.ToDouble(edu.GPA?.Score) >= Convert.ToDouble(gpa))
+                                    educations.Add(new Education()
                                     {
-                                        Compatibility += parsingPercentage?.GpaPercentage ?? 0;
-                                    }
-                                    else
+                                        ResumeId = resumeId,
+                                        InstituteName = edu.SchoolName?.Normalized ?? "",
+                                        DegreeName = edu.Degree?.Name?.Normalized ?? "",
+                                        Cgpa = edu.GPA?.Score.ToString() ?? "",
+                                        DegreeType = edu.Degree?.Type ?? "",
+                                        StartDate = (edu.LastEducationDate != null) ? edu.LastEducationDate.Date : null,
+                                        EndDate = (edu.LastEducationDate != null) ? edu.LastEducationDate.Date : null,
+                                        CreatedOn = DateTime.Now
+                                    });
+
+                                    //GPA match
+                                    if (gpa != null && edu.Degree?.Type == "bachelors" && !String.IsNullOrEmpty(edu.GPA?.Score.ToString()))
                                     {
-                                        Compatibility += (Convert.ToDouble(edu.GPA?.Score) / Convert.ToDouble(gpa)) * parsingPercentage?.GpaPercentage ?? 0;
+                                        if (Convert.ToDouble(edu.GPA?.Score) >= Convert.ToDouble(gpa))
+                                        {
+                                            Compatibility += parsingPercentage?.GpaPercentage ?? 0;
+                                        }
+                                        else
+                                        {
+                                            Compatibility += (Convert.ToDouble(edu.GPA?.Score) / Convert.ToDouble(gpa)) * parsingPercentage?.GpaPercentage ?? 0;
+                                        }
+                                        resume.Gpa = edu.GPA?.Score;
+                                        percentage -= parsingPercentage?.GpaPercentage ?? 0;
                                     }
-                                    resume.Gpa = edu.GPA?.Score;
-                                    percentage -= parsingPercentage?.GpaPercentage ?? 0;
-                                }
 
-                                //Initutte Name Match
-                                if (institute != null && edu.Degree?.Type == "bachelors" &&
-                                     ((edu.SchoolName?.Normalized?.ToLower().Trim().Contains(institute.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.SchoolName?.Normalized?.ToLower().Trim().Contains(institute.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text ?? null, institute) > 80))
-                                {
-                                    resume.InstituteMatch = "Yes";
-                                    Compatibility += parsingPercentage?.InstitutePercentage ?? 0;
-                                    percentage -= parsingPercentage?.InstitutePercentage ?? 0;
-                                }
+                                    //Initutte Name Match
+                                    if (institute != null && edu.Degree?.Type == "bachelors" &&
+                                         ((edu.SchoolName?.Normalized?.ToLower().Trim().Contains(institute.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.SchoolName?.Normalized?.ToLower().Trim().Contains(institute.ToLower().Trim(), StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text ?? null, institute) > 80))
+                                    {
+                                        resume.InstituteMatch = "Yes";
+                                        Compatibility += parsingPercentage?.InstitutePercentage ?? 0;
+                                        percentage -= parsingPercentage?.InstitutePercentage ?? 0;
+                                    }
 
-                                var education = vacancy.JobDetails.FirstOrDefault(w => w.JobCodeId == 4).Description;
-                                if ((edu.Degree?.Name?.Raw.ToLower().Trim().Equals(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.Text?.ToLower().Trim().Contains(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
-                                {
-                                    eduMatch = true;
+                                    var education = vacancy.JobDetails.FirstOrDefault(w => w.JobCodeId == 4).Description;
+                                    if ((edu.Degree?.Name?.Raw.ToLower().Trim().Equals(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || (edu.Text?.ToLower().Trim().Contains(education, StringComparison.CurrentCultureIgnoreCase) ?? false) || Fuzz.TokenInitialismRatio(edu.Text?.ToLower().Trim(), education) > 80)
+                                    {
+                                        eduMatch = true;
+                                    }
                                 }
                             }
                             if (percentage > parsingPercentage?.Percentage)
@@ -203,21 +206,24 @@ namespace HireSort.Repository.Implementation
                             {
                                 //if(job.StartDate!=null || job.EndDate != null)
                                 //years  
-                                int? Years = job.EndDate?.Date.Year - job.StartDate?.Date.Year;
-                                int? month = job.EndDate?.Date.Month - job.StartDate?.Date.Month;
-                                int? TotalMonths = (Years * 12) + month;
-
-                                workHistory.Add(new Experience()
+                                if (job != null)
                                 {
-                                    ResumeId = resumeId,
-                                    CompanyName = job.Employer?.Name?.Normalized ?? "",
-                                    Responsibility = job.Description,
-                                    Designation = job.JobTitle?.Normalized ?? "",
-                                    TotalExperience = TotalMonths ?? 0,
-                                    StartDate = job.StartDate.Date,
-                                    EndDate = job.EndDate.Date,
-                                    CreatedOn = DateTime.Now
-                                });
+                                    int? Years = job.EndDate?.Date.Year - job.StartDate?.Date.Year;
+                                    int? month = job.EndDate?.Date.Month - job.StartDate?.Date.Month;
+                                    int? TotalMonths = (Years * 12) + month;
+
+                                    workHistory.Add(new Experience()
+                                    {
+                                        ResumeId = resumeId,
+                                        CompanyName = job?.Employer?.Name?.Normalized ?? "",
+                                        Responsibility = job?.Description,
+                                        Designation = job?.JobTitle?.Normalized ?? "",
+                                        TotalExperience = TotalMonths ?? 0,
+                                        StartDate = (job.StartDate != null)? job.StartDate.Date: DateTime.Now,
+                                        EndDate = (job.EndDate != null) ? job.EndDate.Date : DateTime.Now,
+                                        CreatedOn = DateTime.Now
+                                    });
+                                }
                             }
                             int totalExp = workHistory.Sum(s => s.TotalExperience);
                             if (totalExp >= minExp)
@@ -233,7 +239,7 @@ namespace HireSort.Repository.Implementation
                             _dbContext.SaveChanges();
                         }
 
-                        if (parseResponse.Value.ResumeData.Skills.Raw.Count > 0)
+                        if (parseResponse.Value.ResumeData.Skills?.Raw.Count > 0)
                         {
                             technicalSkills.AddRange(parseResponse.Value.ResumeData.Skills.Raw.Distinct().Select(s => new TechnicalSkill()
                             {
@@ -271,7 +277,7 @@ namespace HireSort.Repository.Implementation
                         }
                         Compatibility = Math.Round(Compatibility, 2);
 
-                        if (parseResponse.Value.ResumeData.ContactInformation.WebAddresses != null && parseResponse.Value.ResumeData.ContactInformation.WebAddresses.Count > 0)
+                        if (parseResponse.Value.ResumeData.ContactInformation?.WebAddresses != null && parseResponse.Value.ResumeData.ContactInformation.WebAddresses.Count > 0)
                         {
                             links.AddRange(parseResponse.Value.ResumeData.ContactInformation.WebAddresses.Select(s => new Link()
                             {
